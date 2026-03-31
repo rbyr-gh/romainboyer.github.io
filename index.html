@@ -2,78 +2,138 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Portfolio Romain Boyer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#f0f0f0; color:#333; }
-    header { background:#222; color:#fff; padding:20px; text-align:center; }
-    nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
-    section { padding:40px 20px; text-align:center; }
-    #my3d { width:100%; height:400px; margin:0 auto; display:block; }
-    img { max-width:300px; margin-top:20px; border-radius:10px; }
-    h1,h2 { margin-bottom:20px; }
-    p { max-width:600px; margin:10px auto; line-height:1.5; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      background: #fff;
+      color: #111;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      padding: 15px 30px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #111;
+      font-weight: bold;
+    }
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #555;
+    }
+    section {
+      padding: 60px 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .projects-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .project-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .project-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      border-top: 1px solid #eee;
+      color: #666;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .contact-form button {
+      padding: 10px 15px;
+      border: none;
+      background: #000;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Romain Boyer</h1>
+  <div><strong>Mon Portfolio</strong></div>
   <nav>
     <a href="#about">À propos</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#3d">Animation 3D</a>
+    <a href="#projects">Projets</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<section id="about">
-  <h2>À propos de moi</h2>
-  <p>Bienvenue sur mon portfolio ! Je crée des sites interactifs avec animations 3D et design moderne. Voici un exemple de ce que je peux réaliser.</p>
+<section id="about" class="hero">
+  <h1>Salut, je suis [Ton Nom]</h1>
+  <p>Développeur / Designer passionné par la création d’expériences uniques.</p>
 </section>
 
-<section id="portfolio">
-  <h2>Mes travaux</h2>
-  <img src="https://via.placeholder.com/300x200" alt="Exemple d'image">
-  <p>Voici un exemple de projet illustrant mes compétences en design web et animations.</p>
+<section id="projects">
+  <h2>Projets récents</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x250" alt="Projet 1">
+      <h3>Projet 1</h3>
+      <p>Description courte du projet.</p>
+    </div>
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x250" alt="Projet 2">
+      <h3>Projet 2</h3>
+      <p>Description courte du projet.</p>
+    </div>
+    <div class="project-card">
+      <img src="https://via.placeholder.com/400x250" alt="Projet 3">
+      <h3>Projet 3</h3>
+      <p>Description courte du projet.</p>
+    </div>
+  </div>
 </section>
 
-<section id="3d">
-  <h2>Animation 3D</h2>
-  <div id="my3d"></div>
+<section id="contact">
+  <h2>Contact</h2>
+  <form class="contact-form">
+    <input type="text" placeholder="Ton nom" required>
+    <input type="email" placeholder="Ton email" required>
+    <textarea rows="5" placeholder="Ton message" required></textarea>
+    <button type="submit">Envoyer</button>
+  </form>
 </section>
 
-<!-- Three.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script>
-  // Initialisation scène, caméra et rendu
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({antialias:true});
-  renderer.setSize(window.innerWidth, 400);
-  document.getElementById('my3d').appendChild(renderer.domElement);
-
-  // Cube 3D
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshNormalMaterial();
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-  camera.position.z = 5;
-
-  // Animation du cube
-  function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Ajustement responsive
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / 400;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, 400);
-  });
-</script>
+<footer>
+  &copy; 2026 Mon Portfolio — Tous droits réservés
+</footer>
 
 </body>
 </html>
