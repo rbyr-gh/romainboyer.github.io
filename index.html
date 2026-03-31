@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,1200 +7,492 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Sora:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #f5f4f0;
-      --bg2: #eceae3;
-      --surface: #ffffff;
-      --ink: #1a1916;
-      --ink2: #4a4844;
-      --ink3: #8a8780;
-      --accent: #c8521a;
-      --accent2: #2a52be;
-      --border: #d8d5cc;
-      --mono: 'DM Mono', monospace;
-      --sans: 'Sora', sans-serif;
-      --radius: 4px;
-      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 max(2rem, 5vw);
-      height: 60px;
-      background: rgba(245,244,240,0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      text-decoration: none;
-    }
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--ink2);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color var(--transition);
-      position: relative;
-    }
-    .nav-links a::after {
-      content:''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
-      background: var(--accent); transition: width var(--transition);
-    }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* ── SECTIONS ── */
     section { padding: 100px max(2rem, 6vw); max-width: 1100px; margin: 0 auto; }
     section + section { padding-top: 80px; }
 
-    /* ── HERO ── */
+    /* ══ LANGUE ══ */
+    .lang-switch { display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn {
+      background: none; border: 1px solid var(--border); border-radius: 2px;
+      padding: 0.2rem 0.55rem; font-family: var(--mono); font-size: 11px;
+      color: var(--ink3); cursor: pointer; transition: all var(--transition);
+    }
+    .lang-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .lang-btn:hover:not(.active) { border-color: var(--ink2); color: var(--ink2); }
+    [data-lang="fr"] [data-en] { display: none !important; }
+    [data-lang="en"] [data-fr] { display: none !important; }
+
+    /* ══ HERO ══ */
     #hero {
-      padding-top: 160px;
-      padding-bottom: 80px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
-      align-items: end;
+      padding-top: 140px; padding-bottom: 80px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
       border-bottom: 1px solid var(--border);
     }
     .hero-tag {
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.2rem;
+      font-family: var(--mono); font-size: 11px; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
       display: flex; align-items: center; gap: 0.7rem;
     }
-    .hero-tag::before {
-      content:'';
-      display: inline-block; width: 24px; height: 1px;
-      background: var(--accent);
-    }
-    h1 {
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 700;
-      line-height: 1.07;
-      letter-spacing: -0.03em;
-    }
+    .hero-tag::before { content:''; display: inline-block; width: 24px; height: 1px; background: var(--accent); }
+    h1 { font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 700; line-height: 1.07; letter-spacing: -0.03em; }
     h1 span { color: var(--accent); }
-    .hero-sub {
-      margin-top: 1.4rem;
-      font-size: 1.05rem;
-      font-weight: 300;
-      color: var(--ink2);
-      max-width: 520px;
-      line-height: 1.75;
-    }
-    .hero-cta {
-      margin-top: 2.4rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: var(--radius);
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--ink);
-      color: var(--bg);
-      border: 1px solid var(--ink);
-    }
-    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
-    .btn-ghost {
-      background: transparent;
-      color: var(--ink);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { border-color: var(--ink); background: var(--bg2); }
+    .hero-sub { margin-top: 1.4rem; font-size: 1rem; font-weight: 300; color: var(--ink2); max-width: 520px; line-height: 1.8; }
+    .hero-cta { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-aside { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; margin-right: 6px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.4;} }
 
-    .hero-meta {
-      text-align: right;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink3);
-      line-height: 2;
+    /* Photo */
+    .avatar-wrap {
+      width: 160px; height: 160px; border-radius: 50%;
+      border: 2px solid var(--border); overflow: hidden;
+      background: var(--bg2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .hero-meta strong {
-      display: block; color: var(--ink2);
-      font-weight: 500;
-    }
-    .status-dot {
-      display: inline-block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      margin-right: 6px;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .avatar-placeholder { font-family: var(--mono); font-size: 10px; color: var(--ink3); text-align: center; padding: 1rem; line-height: 1.8; }
+    .hero-infos { font-family: var(--mono); font-size: 11px; color: var(--ink3); line-height: 2.1; text-align: center; }
+    .hero-infos strong { display: block; color: var(--ink2); font-weight: 500; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-    /* ── SECTION TITLES ── */
-    .section-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-      display: flex; align-items: center; gap: 0.7rem;
-    }
-    .section-label::before {
-      content: attr(data-num);
-      color: var(--ink3);
-    }
-    h2 {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
-    }
+    /* ══ SECTION TITLES ══ */
+    .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.7rem; }
+    .section-label::before { content: attr(data-num); color: var(--ink3); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 3rem; }
 
-    /* ── À PROPOS ── */
+    /* ══ À PROPOS ══ */
     #apropos { border-bottom: 1px solid var(--border); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
     .about-text p { color: var(--ink2); margin-bottom: 1rem; font-weight: 300; }
     .about-text p strong { color: var(--ink); font-weight: 600; }
-    .about-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-    }
-    .stat-box {
-      padding: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-    .stat-box .num {
-      font-size: 2rem;
-      font-weight: 700;
-      font-family: var(--mono);
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-box .label {
-      font-size: 12px;
-      font-family: var(--mono);
-      color: var(--ink3);
-      margin-top: 0.3rem;
-      letter-spacing: 0.04em;
-    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-box { padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+    .stat-box .num { font-size: 2rem; font-weight: 700; font-family: var(--mono); color: var(--accent); line-height: 1; }
+    .stat-box .label { font-size: 12px; font-family: var(--mono); color: var(--ink3); margin-top: 0.3rem; letter-spacing: 0.04em; }
 
-    /* ── COMPÉTENCES ── */
+    /* ══ COMPÉTENCES ══ */
     #competences { border-bottom: 1px solid var(--border); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-    .skill-cat {
-      padding: 1.8rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color var(--transition), transform var(--transition);
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .skill-cat { padding: 1.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color var(--transition), transform var(--transition); }
     .skill-cat:hover { border-color: var(--ink); transform: translateY(-2px); }
-    .skill-cat-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
+    .skill-cat-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag {
-      font-family: var(--mono);
-      font-size: 12px;
-      padding: 0.3rem 0.65rem;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--ink2);
-    }
 
-    /* ── PROJETS ── */
+    /* ══ PROJETS ══ */
     #projets { border-bottom: 1px solid var(--border); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
     .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; text-decoration: none; color: inherit; display: block;
       transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-      cursor: pointer;
     }
-    .project-card:hover {
-      border-color: var(--ink);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.07);
-    }
+    .project-card:hover { border-color: var(--ink); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
     .project-thumb {
-      height: 180px;
-      background: var(--bg2);
+      height: 200px; background: var(--bg2);
       display: flex; align-items: center; justify-content: center;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink3);
-      letter-spacing: 0.1em;
-      position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
     }
+    .project-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+    .project-card:hover .project-thumb img { transform: scale(1.05); }
     .project-thumb canvas { position: absolute; inset: 0; }
-    .project-thumb .thumb-label {
-      position: relative; z-index: 1;
-      background: rgba(245,244,240,0.85);
-      padding: 4px 10px;
-      border-radius: 2px;
-      font-size: 10px;
-    }
+    .project-thumb-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(26,25,22,0.45) 0%, transparent 55%); opacity: 0; transition: opacity var(--transition); }
+    .project-card:hover .project-thumb-overlay { opacity: 1; }
+    .thumb-label { position: relative; z-index: 3; background: rgba(245,244,240,0.88); padding: 4px 12px; border-radius: 2px; font-size: 10px; font-family: var(--mono); backdrop-filter: blur(4px); color: var(--ink3); }
+    .project-thumb:has(img) .thumb-label { display: none; }
+    .thumb-arrow { position: absolute; bottom: 12px; right: 14px; z-index: 4; width: 32px; height: 32px; background: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg); font-size: 14px; opacity: 0; transform: translateY(4px); transition: opacity var(--transition), transform var(--transition); }
+    .project-card:hover .thumb-arrow { opacity: 1; transform: translateY(0); }
     .project-body { padding: 1.5rem; }
-    .project-type {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .project-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .project-desc {
-      font-size: 13px;
-      color: var(--ink2);
-      font-weight: 300;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
+    .project-type { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .project-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .project-desc { font-size: 13px; color: var(--ink2); font-weight: 300; line-height: 1.6; margin-bottom: 1rem; }
     .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-has3d { position: absolute; top: 12px; left: 12px; z-index: 4; font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; background: var(--accent); color: #fff; padding: 3px 8px; border-radius: 2px; text-transform: uppercase; }
 
-    /* ── MODÈLES 3D ── */
-    #modeles3d { border-bottom: 1px solid var(--border); }
-    .models-intro {
-      font-size: 13px; font-weight: 300; color: var(--ink2);
-      margin-bottom: 2rem; max-width: 560px;
-      font-family: var(--mono);
-      line-height: 1.8;
-    }
-    .models-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.2rem;
-    }
-    .model-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--surface);
-      transition: border-color var(--transition), transform var(--transition);
-    }
-    .model-card:hover { border-color: var(--ink); transform: translateY(-2px); }
-    .model-viewer {
-      height: 160px;
-      background: linear-gradient(135deg, #1a1916 0%, #2d2b26 100%);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .model-viewer canvas { position: absolute; inset: 0; }
-    .model-placeholder {
-      color: var(--ink3);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-align: center;
-      z-index: 1;
-    }
-    .model-placeholder svg { display: block; margin: 0 auto 0.5rem; opacity: 0.5; }
-    .model-info { padding: 1rem 1.2rem; }
-    .model-name { font-size: 13px; font-weight: 600; margin-bottom: 0.2rem; }
-    .model-meta { font-family: var(--mono); font-size: 10px; color: var(--ink3); }
-
-    .models-intro-block {
-      display: grid; grid-template-columns: 1fr auto; gap: 2rem;
-      align-items: start; margin-bottom: 2rem;
-    }
-    .models-intro-text {
-      font-family: var(--mono); font-size: 13px; color: var(--ink2);
-      line-height: 1.9;
-    }
-    .models-intro-text code {
-      background: var(--bg2); border: 1px solid var(--border);
-      padding: 0.1em 0.4em; border-radius: 2px; font-size: 12px; color: var(--accent);
-    }
-    .models-intro-cmd {
-      background: var(--ink); border-radius: var(--radius);
-      overflow: hidden; min-width: 300px;
-    }
-    .cmd-label {
-      display: block; font-family: var(--mono); font-size: 10px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--ink3); padding: 0.6rem 1rem 0.4rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .cmd-line {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1rem;
-      font-family: var(--mono); font-size: 13px; color: #e8e4d8;
-    }
-    .cmd-prompt { color: var(--accent); user-select: none; }
-    .cmd-copy {
-      margin-left: auto; background: rgba(255,255,255,0.08);
-      border: none; color: #888; border-radius: 2px;
-      padding: 0.2rem 0.5rem; cursor: pointer; font-size: 14px;
-      transition: background var(--transition), color var(--transition);
-    }
-    .cmd-copy:hover { background: rgba(255,255,255,0.15); color: #fff; }
-    .cmd-tabs { display: flex; border-top: 1px solid rgba(255,255,255,0.07); }
-    .cmd-tab {
-      flex: 1; background: none; border: none;
-      font-family: var(--mono); font-size: 11px; color: #666;
-      padding: 0.4rem; cursor: pointer; transition: all var(--transition);
-    }
-    .cmd-tab:hover { color: #aaa; }
-    .cmd-tab.active { color: var(--accent); background: rgba(200,82,26,0.1); }
-    .models-status {
-      font-family: var(--mono); font-size: 12px;
-      padding: 0.7rem 1rem; border-radius: var(--radius);
-      margin-bottom: 1.5rem; border: 1px solid;
-    }
-    .models-status.ok { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
-    .models-status.err { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-    .model-empty {
-      grid-column: 1 / -1;
-      text-align: center; padding: 4rem 2rem;
-      color: var(--ink3); font-family: var(--mono); font-size: 13px; line-height: 2;
-      border: 1px dashed var(--border); border-radius: var(--radius);
-    }
-    .model-empty svg { margin: 0 auto 1rem; display: block; }
-    .model-empty code {
-      background: var(--bg2); border: 1px solid var(--border);
-      padding: 0.1em 0.4em; border-radius: 2px; font-size: 11px; color: var(--accent);
-    }
-    .model-card-actions {
-      display: flex; gap: 0.5rem; padding: 0 1.2rem 1rem;
-    }
-    .model-card-actions button {
-      flex: 1; font-family: var(--mono); font-size: 11px;
-      padding: 0.4rem 0.5rem; border-radius: var(--radius);
-      border: 1px solid var(--border); background: var(--bg2);
-      color: var(--ink2); cursor: pointer; transition: all var(--transition);
-    }
-    .model-card-actions button:hover { border-color: var(--ink); background: var(--bg); color: var(--ink); }
-    .model-loading {
-      position: absolute; inset: 0; display: flex; align-items: center;
-      justify-content: center; background: linear-gradient(135deg,#1a1916,#2a2825);
-      font-family: var(--mono); font-size: 11px; color: var(--ink3); gap: 0.5rem;
-    }
-    .spinner {
-      width: 14px; height: 14px;
-      border: 2px solid rgba(200,82,26,0.3); border-top-color: var(--accent);
-      border-radius: 50%; animation: spin 0.7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 768px) { .models-intro-block { grid-template-columns: 1fr; } }
-
-    /* ── CV ── */
+    /* ══ CV ══ */
     #cv { border-bottom: 1px solid var(--border); }
-    .cv-block {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 3rem; align-items: start;
-    }
-    .cv-preview {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-    }
-    .cv-line {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--bg2);
-    }
+    .cv-layout { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+    .cv-group + .cv-group { margin-top: 2rem; }
+    .cv-group-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink3); text-transform: uppercase; margin-bottom: 1.2rem; }
+    .cv-line { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.9rem 0; border-bottom: 1px solid var(--bg2); }
     .cv-line:last-child { border-bottom: none; }
-    .cv-line-left { }
-    .cv-line-title {
-      font-weight: 600; font-size: 14px; margin-bottom: 0.15rem;
-    }
-    .cv-line-sub {
-      font-size: 12px; color: var(--ink2); font-family: var(--mono);
-    }
-    .cv-line-date {
-      font-family: var(--mono);
-      font-size: 11px; color: var(--accent);
-      white-space: nowrap;
-    }
-    .cv-actions { display: flex; flex-direction: column; gap: 1rem; }
-    .cv-actions p {
-      font-size: 13px; font-weight: 300; color: var(--ink2); line-height: 1.7;
-    }
+    .cv-line-title { font-weight: 600; font-size: 14px; margin-bottom: 0.15rem; }
+    .cv-line-sub { font-size: 12px; color: var(--ink2); font-family: var(--mono); }
+    .cv-line-date { font-family: var(--mono); font-size: 11px; color: var(--accent); white-space: nowrap; margin-left: 1rem; flex-shrink: 0; }
+    /* PDF card */
+    .cv-pdf-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .cv-pdf-header { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--border); background: var(--bg2); }
+    .cv-pdf-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); }
+    .cv-pdf-preview { min-height: 360px; display: flex; align-items: center; justify-content: center; }
+    .cv-pdf-preview iframe { width: 100%; height: 400px; border: none; display: block; }
+    .cv-pdf-placeholder { text-align: center; font-family: var(--mono); font-size: 12px; color: var(--ink3); padding: 2.5rem 1.5rem; line-height: 2; }
+    .cv-pdf-placeholder svg { display: block; margin: 0 auto 1rem; opacity: 0.3; }
+    .cv-pdf-placeholder code { background: var(--bg2); border: 1px solid var(--border); padding: 0.1em 0.4em; border-radius: 2px; color: var(--accent); font-size: 11px; }
 
-    /* ── CONTACT ── */
+    /* ══ CONTACT ══ */
     #contact { }
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
-    }
-    .contact-info p {
-      color: var(--ink2); font-weight: 300; line-height: 1.8; margin-bottom: 2rem;
-    }
-    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
-    .contact-link {
-      display: flex; align-items: center; gap: 0.8rem;
-      font-family: var(--mono); font-size: 13px;
-      color: var(--ink2); text-decoration: none;
-      transition: color var(--transition);
-    }
-    .contact-link:hover { color: var(--accent); }
-    .contact-link-icon {
-      width: 32px; height: 32px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    label {
-      font-family: var(--mono); font-size: 11px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--ink3);
-    }
-    input, textarea {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.7rem 1rem;
-      font-family: var(--sans); font-size: 14px;
-      color: var(--ink);
-      outline: none;
-      transition: border-color var(--transition);
-      resize: vertical;
-    }
-    input:focus, textarea:focus { border-color: var(--ink); }
-    textarea { min-height: 120px; }
-    .form-submit {
-      align-self: flex-start;
-    }
-    .form-success {
-      display: none;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: var(--radius);
-      padding: 0.8rem 1rem;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: #166534;
-    }
+    .contact-intro { font-size: 1rem; font-weight: 300; color: var(--ink2); max-width: 600px; line-height: 1.8; margin-bottom: 2rem; }
+    .contact-links-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .contact-link-card { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1.4rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--ink2); font-family: var(--mono); transition: all var(--transition); }
+    .contact-link-card:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .contact-link-card .icon { font-size: 16px; }
+    .contact-link-card .lbl { font-size: 10px; display: block; color: var(--ink3); margin-bottom: 0.1rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .contact-link-card .val { font-size: 13px; color: var(--ink); }
 
-    /* ── FOOTER ── */
-    footer {
-      max-width: 1100px; margin: 0 auto;
-      padding: 2.5rem max(2rem, 6vw);
-      display: flex; justify-content: space-between; align-items: center;
-      border-top: 1px solid var(--border);
-    }
-    .footer-copy {
-      font-family: var(--mono); font-size: 11px; color: var(--ink3);
-    }
-    .footer-links {
-      display: flex; gap: 1.5rem;
-    }
-    .footer-links a {
-      font-family: var(--mono); font-size: 11px; color: var(--ink3);
-      text-decoration: none; transition: color var(--transition);
-    }
-    .footer-links a:hover { color: var(--ink); }
+    /* ══ ANIMATIONS AU DÉFILEMENT ══ */
+    .anim         { opacity:0; transform:translateY(32px);  transition:opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1); }
+    .anim-left    { opacity:0; transform:translateX(-44px); transition:opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1); }
+    .anim-right   { opacity:0; transform:translateX(44px);  transition:opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1); }
+    .anim-scale   { opacity:0; transform:scale(0.9);        transition:opacity .6s  cubic-bezier(.4,0,.2,1), transform .6s  cubic-bezier(.4,0,.2,1); }
+    .anim.visible, .anim-left.visible, .anim-right.visible, .anim-scale.visible { opacity:1; transform:none; }
+    .anim-d1 { transition-delay:.07s; }
+    .anim-d2 { transition-delay:.14s; }
+    .anim-d3 { transition-delay:.21s; }
+    .anim-d4 { transition-delay:.28s; }
 
-    /* ── ANIMATIONS ── */
-    .fade-in {
-      opacity: 0; transform: translateY(18px);
-      transition: opacity 0.55s cubic-bezier(.4,0,.2,1), transform 0.55s cubic-bezier(.4,0,.2,1);
+    /* ══ RESPONSIVE ══ */
+    @media (max-width:900px) {
+      #hero { grid-template-columns:1fr; }
+      .hero-aside { flex-direction:row; justify-content:flex-start; }
+      .hero-infos { text-align:left; }
+      .about-grid, .cv-layout { grid-template-columns:1fr; gap:2rem; }
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-meta { text-align: left; }
-      .about-grid, .cv-block, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .nav-links { display: none; }
-    }
+    @media (max-width:600px) { .avatar-wrap { width:110px; height:110px; } }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ══ NAV ══ -->
   <nav>
     <a class="nav-logo" href="#hero">// portfolio</a>
     <ul class="nav-links">
-      <li><a href="#apropos">À propos</a></li>
-      <li><a href="#competences">Compétences</a></li>
-      <li><a href="#projets">Projets</a></li>
-      <li><a href="#modeles3d">3D</a></li>
+      <li><a href="#apropos"><span data-fr>À propos</span><span data-en>About</span></a></li>
+      <li><a href="#competences"><span data-fr>Compétences</span><span data-en>Skills</span></a></li>
+      <li><a href="#projets"><span data-fr>Projets</span><span data-en>Projects</span></a></li>
       <li><a href="#cv">CV</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr',this)">FR</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+    </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ══ HERO ══ -->
   <section id="hero">
     <div>
-      <div class="hero-tag">Recherche d'alternance · 2024–2025</div>
-      <h1>Prénom<br><span>Nom</span></h1>
+      <div class="hero-tag">
+        <span data-fr>Recherche d'alternance · Sept. 2026 – Sept. 2029</span>
+        <span data-en>Looking for apprenticeship · 2024–2025</span>
+      </div>
+      <!-- ✏️ PRÉNOM NOM -->
+      <h1>Romain<br><span>Boyer</span></h1>
       <p class="hero-sub">
-        Étudiant en <strong>électronique &amp; informatique embarquée</strong>, passionné par la conception de systèmes, le prototypage et la modélisation 3D. À la recherche d'une alternance pour développer mon savoir-faire technique.
+        <span data-fr>Étudiant en <strong>électronique &amp; informatique</strong>, passionné par la conception de systèmes, le prototypage et la modélisation 3D. À la recherche d'une alternance pour développer mon savoir-faire technique.</span>
+        <span data-en>Student in <strong>electronics &amp; embedded systems</strong>, passionate about system design, prototyping and 3D modelling. Seeking an apprenticeship to grow my technical expertise.</span>
       </p>
       <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">Me contacter</a>
-        <a href="#projets" class="btn btn-ghost">Voir les projets</a>
+        <a href="#contact" class="btn btn-primary"><span data-fr>Me contacter</span><span data-en>Contact me</span></a>
+        <a href="#projets" class="btn btn-ghost"><span data-fr>Voir les projets</span><span data-en>See projects</span></a>
       </div>
     </div>
-    <div class="hero-meta">
-      <span class="status-dot"></span>Disponible en alternance<br>
-      <strong>Formation</strong>
-      BTS / BUT / Licence<br>
-      <strong>Localisation</strong>
-      France<br>
-      <strong>Rythme</strong>
-      À définir
+
+    <div class="hero-aside">
+      <div class="avatar-wrap">
+        <img src="photo.jpg" alt="Photo de profil">
+      </div>
+      <div class="hero-infos">
+        <span class="status-dot"></span><span data-fr>Disponible</span><span data-en>Available</span><br>
+        <strong data-fr>Formation</strong><strong data-en>Education</strong>
+        ESEO - Ingénieur Généraliste<br>
+        <!-- ✏️ VILLE -->
+        <strong data-fr>Localisation</strong><strong data-en>Location</strong>
+        France<br>
+      </div>
     </div>
   </section>
 
-  <!-- À PROPOS -->
-  <section id="apropos" class="fade-in">
-    <div class="section-label" data-num="01">À propos</div>
-    <h2>Qui suis-je ?</h2>
+  <!-- ══ À PROPOS ══ -->
+  <section id="apropos">
+    <div class="section-label anim" data-num="01"><span data-fr>À propos</span><span data-en>About</span></div>
+    <h2 class="anim anim-d1"><span data-fr>Qui suis-je ?</span><span data-en>Who am I?</span></h2>
     <div class="about-grid">
-      <div class="about-text">
-        <p>Passionné par les <strong>systèmes embarqués</strong> et l'interface entre le matériel et le logiciel, je développe des compétences solides en électronique analogique et numérique, ainsi qu'en programmation bas niveau.</p>
-        <p>Mon attrait pour la <strong>conception 3D</strong> avec Fusion 360 me permet de mener des projets de bout en bout : du schéma électrique à la pièce imprimée en 3D, en passant par le firmware.</p>
-        <p>Je cherche une alternance qui me permette d'apprendre auprès de professionnels tout en apportant ma curiosité et ma rigueur à des projets concrets.</p>
+      <div class="about-text anim anim-left">
+        <p data-fr>Passionné par les <strong>systèmes embarqués</strong> et l'interface entre le matériel et le logiciel, je développe des compétences solides en électronique analogique et numérique, ainsi qu'en programmation bas niveau.</p>
+        <p data-fr>Mon attrait pour la <strong>conception 3D</strong> avec Fusion 360 me permet de mener des projets de bout en bout : du schéma électrique à la pièce imprimée en 3D, en passant par le firmware.</p>
+        <p data-fr>Je cherche une alternance qui me permette d'apprendre auprès de professionnels tout en apportant ma curiosité et ma rigueur à des projets concrets.</p>
+        <p data-en>Passionate about <strong>embedded systems</strong> and the interface between hardware and software, I am building solid skills in analog and digital electronics, as well as low-level programming.</p>
+        <p data-en>My interest in <strong>3D design</strong> with Fusion 360 lets me carry projects from end to end: from electrical schematics to 3D-printed parts and firmware.</p>
+        <p data-en>I am looking for an apprenticeship to learn from experienced professionals while contributing my curiosity and rigour to real projects.</p>
       </div>
       <div class="about-stats">
-        <div class="stat-box">
-          <div class="num">3+</div>
-          <div class="label">Projets réalisés</div>
-        </div>
-        <div class="stat-box">
-          <div class="num">2</div>
-          <div class="label">Langages principaux</div>
-        </div>
-        <div class="stat-box">
-          <div class="num">CAO</div>
-          <div class="label">Fusion 360</div>
-        </div>
-        <div class="stat-box">
-          <div class="num">100%</div>
-          <div class="label">Motivé</div>
-        </div>
+        <div class="stat-box anim anim-scale anim-d1"><div class="num">3+</div><div class="label"><span data-fr>Projets réalisés</span><span data-en>Projects done</span></div></div>
+        <div class="stat-box anim anim-scale anim-d2"><div class="num">2</div><div class="label"><span data-fr>Langages principaux</span><span data-en>Main languages</span></div></div>
+        <div class="stat-box anim anim-scale anim-d3"><div class="num">CAO</div><div class="label">Fusion 360</div></div>
+        <div class="stat-box anim anim-scale anim-d4"><div class="num">100%</div><div class="label"><span data-fr>Motivé</span><span data-en>Motivated</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- COMPÉTENCES -->
-  <section id="competences" class="fade-in">
-    <div class="section-label" data-num="02">Compétences</div>
-    <h2>Savoir-faire technique</h2>
+  <!-- ══ COMPÉTENCES ══ -->
+  <section id="competences">
+    <div class="section-label anim" data-num="02"><span data-fr>Compétences</span><span data-en>Skills</span></div>
+    <h2 class="anim anim-d1"><span data-fr>Savoir-faire technique</span><span data-en>Technical expertise</span></h2>
     <div class="skills-grid">
-      <div class="skill-cat">
-        <div class="skill-cat-title">Électronique</div>
+      <div class="skill-cat anim anim-d1">
+        <div class="skill-cat-title"><span data-fr>Électronique</span><span data-en>Electronics</span></div>
         <div class="skill-tags">
-          <span class="tag">Analogique</span>
-          <span class="tag">Numérique</span>
-          <span class="tag">PCB</span>
-          <span class="tag">Oscilloscope</span>
-          <span class="tag">Multimètre</span>
-          <span class="tag">Amplificateurs Op.</span>
+          <span class="tag" data-fr>Analogique</span><span class="tag" data-en>Analog</span>
+          <span class="tag" data-fr>Numérique</span><span class="tag" data-en>Digital</span>
+          <span class="tag">PCB</span><span class="tag">Op-Amp</span>
+          <span class="tag" data-fr>Oscilloscope</span><span class="tag" data-en>Oscilloscope</span>
         </div>
       </div>
-      <div class="skill-cat">
-        <div class="skill-cat-title">Programmation</div>
+      <div class="skill-cat anim anim-d2">
+        <div class="skill-cat-title"><span data-fr>Programmation</span><span data-en>Programming</span></div>
         <div class="skill-tags">
-          <span class="tag">C / C++</span>
-          <span class="tag">Python</span>
-          <span class="tag">Arduino</span>
-          <span class="tag">STM32</span>
-          <span class="tag">UART / I²C / SPI</span>
+          <span class="tag">C / C++</span><span class="tag">Python</span>
+          <span class="tag">Arduino</span><span class="tag">STM32</span><span class="tag">I²C / SPI</span>
         </div>
       </div>
-      <div class="skill-cat">
-        <div class="skill-cat-title">CAO & Conception</div>
+      <div class="skill-cat anim anim-d3">
+        <div class="skill-cat-title"><span data-fr>CAO & Conception</span><span data-en>CAD & Design</span></div>
         <div class="skill-tags">
           <span class="tag">Fusion 360</span>
-          <span class="tag">Impression 3D</span>
+          <span class="tag" data-fr>Impression 3D</span><span class="tag" data-en>3D Printing</span>
           <span class="tag">KiCad</span>
-          <span class="tag">Modélisation</span>
         </div>
       </div>
-      <div class="skill-cat">
-        <div class="skill-cat-title">Outils & Méthodes</div>
+      <div class="skill-cat anim anim-d4">
+        <div class="skill-cat-title"><span data-fr>Outils</span><span data-en>Tools</span></div>
         <div class="skill-tags">
-          <span class="tag">Git</span>
-          <span class="tag">Linux</span>
-          <span class="tag">VS Code</span>
-          <span class="tag">Agile</span>
-          <span class="tag">Latex</span>
+          <span class="tag">Git</span><span class="tag">Linux</span>
+          <span class="tag">VS Code</span><span class="tag">LaTeX</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJETS -->
-  <section id="projets" class="fade-in">
-    <div class="section-label" data-num="03">Projets</div>
-    <h2>Réalisations</h2>
+  <!-- ══ PROJETS ══ -->
+  <section id="projets">
+    <div class="section-label anim" data-num="03"><span data-fr>Projets</span><span data-en>Projects</span></div>
+    <h2 class="anim anim-d1"><span data-fr>Réalisations</span><span data-en>Work</span></h2>
     <div class="projects-grid">
-      <div class="project-card">
+
+      <!-- Projet 1 — avec 3D -->
+      <a class="project-card anim anim-d1" href="projets/projet-1/index.html">
         <div class="project-thumb" id="thumb1">
+          <!-- ✏️ Décommentez et renseignez l'image de couverture -->
+          <!-- <img src="projets/projet-1/cover.jpg" alt="Projet 1"> -->
+          <div class="project-thumb-overlay"></div>
+          <span class="project-has3d">3D</span>
           <span class="thumb-label">Schéma · PCB</span>
+          <span class="thumb-arrow">→</span>
         </div>
         <div class="project-body">
-          <div class="project-type">Électronique embarquée</div>
-          <div class="project-title">Projet 1 — À personnaliser</div>
-          <p class="project-desc">Description courte du projet : objectif, technologie utilisée, résultat obtenu.</p>
-          <div class="project-tags">
-            <span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span>
-          </div>
+          <!-- ✏️ TYPE -->
+          <div class="project-type"><span data-fr>Électronique embarquée</span><span data-en>Embedded electronics</span></div>
+          <!-- ✏️ TITRE -->
+          <div class="project-title"><span data-fr>Projet 1 — À personnaliser</span><span data-en>Project 1 — To customise</span></div>
+          <!-- ✏️ DESCRIPTION -->
+          <p class="project-desc"><span data-fr>Description courte du projet : objectif, technologie, résultat.</span><span data-en>Short project description: objective, technology, result.</span></p>
+          <div class="project-tags"><span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion 360</span></div>
         </div>
-      </div>
-      <div class="project-card">
+      </a>
+
+      <!-- Projet 2 — sans 3D -->
+      <a class="project-card anim anim-d2" href="projets/projet-2/index.html">
         <div class="project-thumb" id="thumb2">
+          <!-- <img src="projets/projet-2/cover.jpg" alt="Projet 2"> -->
+          <div class="project-thumb-overlay"></div>
           <span class="thumb-label">Firmware · Capteurs</span>
+          <span class="thumb-arrow">→</span>
         </div>
         <div class="project-body">
-          <div class="project-type">Systèmes embarqués</div>
-          <div class="project-title">Projet 2 — À personnaliser</div>
-          <p class="project-desc">Description courte du projet : objectif, technologie utilisée, résultat obtenu.</p>
-          <div class="project-tags">
-            <span class="tag">Arduino</span><span class="tag">Python</span><span class="tag">I²C</span>
-          </div>
+          <div class="project-type"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
+          <div class="project-title"><span data-fr>Projet 2 — À personnaliser</span><span data-en>Project 2 — To customise</span></div>
+          <p class="project-desc"><span data-fr>Description courte du projet : objectif, technologie, résultat.</span><span data-en>Short project description: objective, technology, result.</span></p>
+          <div class="project-tags"><span class="tag">Arduino</span><span class="tag">Python</span><span class="tag">I²C</span></div>
         </div>
-      </div>
-      <div class="project-card">
+      </a>
+
+      <!-- Projet 3 — avec 3D -->
+      <a class="project-card anim anim-d3" href="projets/projet-3/index.html">
         <div class="project-thumb" id="thumb3">
+          <!-- <img src="projets/projet-3/cover.jpg" alt="Projet 3"> -->
+          <div class="project-thumb-overlay"></div>
+          <span class="project-has3d">3D</span>
           <span class="thumb-label">CAO · Impression 3D</span>
+          <span class="thumb-arrow">→</span>
         </div>
         <div class="project-body">
-          <div class="project-type">Conception 3D</div>
-          <div class="project-title">Projet 3 — À personnaliser</div>
-          <p class="project-desc">Description courte du projet : boîtier, assemblage mécanique ou pièce sur mesure.</p>
-          <div class="project-tags">
-            <span class="tag">Fusion 360</span><span class="tag">FDM</span>
-          </div>
+          <div class="project-type"><span data-fr>Conception 3D</span><span data-en>3D Design</span></div>
+          <div class="project-title"><span data-fr>Projet 3 — À personnaliser</span><span data-en>Project 3 — To customise</span></div>
+          <p class="project-desc"><span data-fr>Boîtier, assemblage mécanique ou pièce sur mesure.</span><span data-en>Enclosure, mechanical assembly or custom part.</span></p>
+          <div class="project-tags"><span class="tag">Fusion 360</span><span class="tag">FDM</span></div>
         </div>
-      </div>
+      </a>
+
     </div>
   </section>
 
-  <!-- MODÈLES 3D -->
-  <section id="modeles3d" class="fade-in">
-    <div class="section-label" data-num="04">Modèles 3D</div>
-    <h2>CAO Fusion 360</h2>
+  <!-- ══ CV ══ -->
+  <section id="cv">
+    <div class="section-label anim" data-num="04">Curriculum Vitæ</div>
+    <h2 class="anim anim-d1"><span data-fr>Parcours</span><span data-en>Background</span></h2>
+    <div class="cv-layout">
 
-    <div class="models-intro-block">
-      <div class="models-intro-text">
-        <p>// Les modèles sont chargés automatiquement depuis le dossier <code>modeles3d/</code>.<br>
-        Placez vos fichiers <strong>.glb</strong> dans ce dossier, puis lancez le serveur local.</p>
-      </div>
-      <div class="models-intro-cmd">
-        <span class="cmd-label">Démarrer le serveur local</span>
-        <div class="cmd-line"><span class="cmd-prompt">$</span> <span id="cmdText">python -m http.server 8080</span> <button class="cmd-copy" onclick="copyCmd()" title="Copier">⎘</button></div>
-        <div class="cmd-tabs">
-          <button class="cmd-tab active" onclick="switchCmd('python', this)">Python</button>
-          <button class="cmd-tab" onclick="switchCmd('node', this)">Node</button>
-          <button class="cmd-tab" onclick="switchCmd('php', this)">PHP</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="modelsStatus" class="models-status" style="display:none;"></div>
-
-    <div class="models-grid" id="modelsGrid">
-      <div class="model-empty" id="modelEmpty">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        <p>Chargement des modèles…</p>
-        <p style="font-size:11px;margin-top:0.3rem;">Les fichiers <code>.glb</code> du dossier <code>modeles3d/</code> apparaîtront ici</p>
-      </div>
-    </div>
-
-    <!-- Modal viewer -->
-    <div id="modelModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(20,19,16,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;">
-      <div style="position:relative;width:min(860px,96vw);background:var(--surface);border-radius:8px;overflow:hidden;border:1px solid var(--border);">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--border);">
-          <span id="modalTitle" style="font-weight:600;font-size:15px;font-family:var(--mono);"></span>
-          <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--ink2);line-height:1;">✕</button>
-        </div>
-        <canvas id="modalCanvas" style="width:100%;height:520px;display:block;"></canvas>
-        <div style="padding:0.7rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:2rem;font-family:var(--mono);font-size:11px;color:var(--ink3);">
-          <span>🖱 Gauche : rotation</span><span>🖱 Molette : zoom</span><span>🖱 Droit : déplacement</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CV -->
-  <section id="cv" class="fade-in">
-    <div class="section-label" data-num="05">Curriculum Vitæ</div>
-    <h2>Parcours</h2>
-    <div class="cv-block">
-      <div class="cv-preview">
-        <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--ink3);text-transform:uppercase;margin-bottom:1.5rem;">Formation</div>
-        <div class="cv-line">
-          <div class="cv-line-left">
-            <div class="cv-line-title">BTS / BUT Électronique & Informatique — À compléter</div>
-            <div class="cv-line-sub">École / IUT · Ville</div>
+      <div class="anim anim-left">
+        <div class="cv-group">
+          <div class="cv-group-label"><span data-fr>Formation</span><span data-en>Education</span></div>
+          <!-- ✏️ FORMATIONS -->
+          <div class="cv-line">
+            <div>
+              <div class="cv-line-title"><span data-fr>BTS / BUT Électronique & Informatique</span><span data-en>HND Electronics & Computer Science</span></div>
+              <div class="cv-line-sub"><span data-fr>École / IUT · Ville</span><span data-en>School · City</span></div>
+            </div>
+            <div class="cv-line-date">2023–2025</div>
           </div>
-          <div class="cv-line-date">2023–2025</div>
-        </div>
-        <div class="cv-line">
-          <div class="cv-line-left">
-            <div class="cv-line-title">Baccalauréat STI2D — À compléter</div>
-            <div class="cv-line-sub">Lycée · Ville</div>
+          <div class="cv-line">
+            <div>
+              <div class="cv-line-title"><span data-fr>Baccalauréat STI2D</span><span data-en>STI2D Baccalaureate</span></div>
+              <div class="cv-line-sub"><span data-fr>Lycée · Ville</span><span data-en>High School · City</span></div>
+            </div>
+            <div class="cv-line-date">2023</div>
           </div>
-          <div class="cv-line-date">2023</div>
         </div>
-        <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--ink3);text-transform:uppercase;margin-top:1.5rem;margin-bottom:1.2rem;">Expériences</div>
-        <div class="cv-line">
-          <div class="cv-line-left">
-            <div class="cv-line-title">Stage / Alternance — À compléter</div>
-            <div class="cv-line-sub">Entreprise · Poste</div>
+        <div class="cv-group">
+          <div class="cv-group-label"><span data-fr>Expériences</span><span data-en>Experience</span></div>
+          <!-- ✏️ EXPÉRIENCES -->
+          <div class="cv-line">
+            <div>
+              <div class="cv-line-title"><span data-fr>Stage / Alternance — À compléter</span><span data-en>Internship / Apprenticeship — To fill</span></div>
+              <div class="cv-line-sub"><span data-fr>Entreprise · Poste</span><span data-en>Company · Role</span></div>
+            </div>
+            <div class="cv-line-date">Dates</div>
           </div>
-          <div class="cv-line-date">Dates</div>
         </div>
       </div>
-      <div class="cv-actions">
-        <p>Téléchargez mon CV complet au format PDF ou contactez-moi directement pour en savoir plus.</p>
-        <a href="cv.pdf" download class="btn btn-primary" id="cvDownload">
-          ↓ Télécharger le CV
-        </a>
-        <a href="#contact" class="btn btn-ghost">Me contacter</a>
-        <div style="margin-top:1rem; font-family:var(--mono); font-size:11px; color:var(--ink3); line-height:1.8;">
-          Remplacez <code>cv.pdf</code><br>par votre fichier dans<br>le même dossier.
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="fade-in">
-    <div class="section-label" data-num="06">Contact</div>
-    <h2>Travaillons ensemble</h2>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <p>Vous cherchez un alternant motivé en électronique et informatique ? Je suis disponible pour discuter de votre entreprise et de vos besoins.</p>
-        <div class="contact-links">
-          <a href="/cdn-cgi/l/email-protection#84f2ebf0f6e1c4e1e9e5ede8aae7ebe9" class="contact-link">
-            <span class="contact-link-icon">✉</span>
-            <span class="__cf_email__" data-cfemail="57213823253217323a363e3b7934383a">[email&#160;protected]</span>
-          </a>
-          <a href="https://linkedin.com/in/votre-profil" target="_blank" class="contact-link">
-            <span class="contact-link-icon">in</span>
-            LinkedIn
-          </a>
-          <a href="https://github.com/votre-profil" target="_blank" class="contact-link">
-            <span class="contact-link-icon" style="font-family:var(--mono);font-size:10px;">GH</span>
-            GitHub
+      <!-- Aperçu PDF -->
+      <div class="cv-pdf-card anim anim-right">
+        <div class="cv-pdf-header">
+          <span class="cv-pdf-label">CV</span>
+          <a href="CV - BOYER Romain.pdf" download class="btn btn-primary" style="font-size:11px;padding:.35rem .9rem;">
+            ↓ <span data-fr>Télécharger</span><span data-en>Download</span>
           </a>
         </div>
+        <div class="cv-pdf-preview" id="cvPreviewWrap">
+          <iframe
+            id="cvIframe"
+            src="CV - BOYER Romain.pdf#toolbar=0&navpanes=0&scrollbar=0&zoom=50"
+            title="Aperçu CV"
+            style="display:none; width:300%; height:440px; border:none;"
+            onload="this.style.display='block'; document.getElementById('cvPlaceholder').style.display='none';">
+          </iframe>
+          <div class="cv-pdf-placeholder" id="cvPlaceholder">
+            <svg width="360" height="440" viewBox="0 0 36 44" fill="none" stroke="currentColor" stroke-width="5">
+              <path d="M4 0h18l14 14v30H4V0z"/><path d="M22 0v14h14"/>
+              <line x1="100" y1="24" x2="26" y2="24"/><line x1="10" y1="30" x2="20" y2="30"/>
+            </svg>
+            <span data-fr>Placez <code>cv.pdf</code><br>dans le dossier racine<br>pour voir l'aperçu</span>
+            <span data-en>Place <code>cv.pdf</code><br>in the root folder<br>to see the preview</span>
+          </div>
+        </div>
       </div>
-      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label for="name">Nom</label>
-          <input type="text" id="name" placeholder="Jean Dupont" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="jean@entreprise.fr" required>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" placeholder="Bonjour, je souhaite discuter d'une opportunité d'alternance…" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary form-submit">Envoyer →</button>
-        <div class="form-success" id="formSuccess">✓ Message envoyé — Je vous répondrai sous 48h.</div>
-      </form>
+
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ══ CONTACT ══ -->
+  <section id="contact">
+    <div class="section-label anim" data-num="05">Contact</div>
+    <h2 class="anim anim-d1"><span data-fr>Travaillons ensemble</span><span data-en>Let's work together</span></h2>
+    <p class="contact-intro anim">
+      <span data-fr>Vous cherchez un alternant motivé en électronique et informatique embarquée ? N'hésitez pas à me contacter via l'un de ces canaux.</span>
+      <span data-en>Looking for a motivated apprentice in electronics and embedded systems? Feel free to reach out through any of the channels below.</span>
+    </p>
+    <div class="contact-links-row anim anim-d1">
+      <!-- ✏️ EMAIL -->
+      <a href="mailto:romain_boyer@reseau.eseo.fr" class="contact-link-card">
+        <span class="icon">✉</span>
+        <span><span class="lbl">Email</span><span class="val">romain_boyer@reseau.eseo.fr</span></span>
+      </a>
+      <!-- ✏️ LINKEDIN -->
+      <a href="https://linkedin.com/in/romainbyr" target="_blank" class="contact-link-card">
+        <span class="icon" style="font-family:var(--sans);font-weight:700;font-size:14px;">in</span>
+        <span><span class="lbl">LinkedIn</span><span class="val">/romainbyr</span></span>
+      </a>
+      <!-- ✏️ GITHUB -->
+      <a href="https://github.com/rbyr-gh" target="_blank" class="contact-link-card">
+        <span class="icon" style="font-family:var(--mono);font-size:12px;">GH</span>
+        <span><span class="lbl">GitHub</span><span class="val">/rbyr-gh</span></span>
+      </a>
+    </div>
+  </section>
+
   <footer>
-    <span class="footer-copy">© 2025 Prénom Nom — Tous droits réservés</span>
+    <span class="footer-copy">© 2026 Romain BOYER</span>
     <div class="footer-links">
-      <a href="#hero">Haut de page</a>
+      <a href="#hero"><span data-fr>Haut de page</span><span data-en>Back to top</span></a>
       <a href="#contact">Contact</a>
     </div>
   </footer>
 
-  <!-- placeholder removed -->
-
   <script>
-    // ══════════════════════════════════════════════
-    // COMMANDES SERVEUR LOCAL
-    // ══════════════════════════════════════════════
-    const cmds = {
-      python: 'python -m http.server 8080',
-      node:   'npx serve . -p 8080',
-      php:    'php -S localhost:8080'
-    };
-    function switchCmd(key, btn) {
-      document.getElementById('cmdText').textContent = cmds[key];
-      document.querySelectorAll('.cmd-tab').forEach(t => t.classList.remove('active'));
+    // ══ LANGUE ══
+    function setLang(lang, btn) {
+      document.documentElement.setAttribute('data-lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
     }
-    function copyCmd() {
-      navigator.clipboard.writeText(document.getElementById('cmdText').textContent);
-      const btn = document.querySelector('.cmd-copy');
-      btn.textContent = '✓'; setTimeout(() => btn.textContent = '⎘', 1500);
-    }
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) {
+        document.documentElement.setAttribute('data-lang', saved);
+        document.querySelectorAll('.lang-btn').forEach(b =>
+          b.classList.toggle('active', b.textContent.toLowerCase() === saved));
+      }
+    } catch(e) {}
 
-    // ══════════════════════════════════════════════
-    // FADE-IN SCROLL
-    // ══════════════════════════════════════════════
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const scrollObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    fadeEls.forEach(el => scrollObserver.observe(el));
+    // ══ ANIMATIONS AU DÉFILEMENT ══
+    const animEls = document.querySelectorAll('.anim, .anim-left, .anim-right, .anim-scale');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    animEls.forEach(el => io.observe(el));
 
-    // ══════════════════════════════════════════════
-    // CONTACT FORM
-    // ══════════════════════════════════════════════
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = '…'; btn.disabled = true;
-      setTimeout(() => {
-        document.getElementById('formSuccess').style.display = 'block';
-        btn.textContent = '✓ Envoyé';
-      }, 900);
-    }
-
-    // ══════════════════════════════════════════════
-    // CIRCUIT CANVAS (project thumbs)
-    // ══════════════════════════════════════════════
+    // ══ CIRCUITS CANVAS (si pas d'image sur la carte projet) ══
     function drawCircuit(id, color) {
       const parent = document.getElementById(id);
-      if (!parent) return;
+      if (!parent || parent.querySelector('img')) return;
       const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;opacity:0.18;';
+      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;opacity:0.15;z-index:1;';
       parent.appendChild(canvas);
       const ctx = canvas.getContext('2d');
       function resize() { canvas.width = parent.offsetWidth; canvas.height = parent.offsetHeight; draw(); }
       function draw() {
         const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0,0,w,h); ctx.strokeStyle = color; ctx.lineWidth = 1;
+        ctx.clearRect(0,0,w,h); ctx.lineWidth = 1;
         const step = 28;
         for (let x = 0; x < w; x += step) for (let y = 0; y < h; y += step) {
           if (Math.random() > 0.6) {
-            ctx.beginPath(); ctx.moveTo(x, y);
+            ctx.strokeStyle = color; ctx.beginPath(); ctx.moveTo(x,y);
             const d = Math.random() > 0.5 ? [step,0] : [0,step];
-            ctx.lineTo(x+d[0], y+d[1]); ctx.stroke();
+            ctx.lineTo(x+d[0],y+d[1]); ctx.stroke();
           }
-          if (Math.random() > 0.85) { ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fillStyle=color; ctx.fill(); }
+          if (Math.random() > 0.85) { ctx.fillStyle = color; ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fill(); }
         }
       }
       resize(); window.addEventListener('resize', resize);
     }
-    drawCircuit('thumb1', '#2a52be');
-    drawCircuit('thumb2', '#c8521a');
-    drawCircuit('thumb3', '#1a1916');
-
-    // ══════════════════════════════════════════════
-    // THREE.JS — chargement dynamique
-    // ══════════════════════════════════════════════
-    function loadScript(src) {
-      return new Promise((res, rej) => {
-        const s = document.createElement('script'); s.src = src;
-        s.onload = res; s.onerror = rej; document.head.appendChild(s);
-      });
-    }
-
-    let THREE_loaded = false;
-    const threeReady = (async () => {
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
-      await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js');
-      await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
-      THREE_loaded = true;
-    })();
-
-    // ══════════════════════════════════════════════
-    // CHARGEMENT DEPUIS modeles3d/
-    // ══════════════════════════════════════════════
-
-    // Liste des fichiers .glb du dossier — à maintenir manuellement
-    // Ajoutez le nom de chaque fichier .glb placé dans modeles3d/
-    const MODELES = [
-      "Untitled.glb"
-      // Exemples — remplacez par vos noms de fichiers :
-      // "boitier-electronique.glb",
-      // "carte-pcb.glb",
-      // "support-capteur.glb",
-    ];
-
-    async function loadModelsFromFolder() {
-      await threeReady;
-      const grid = document.getElementById('modelsGrid');
-      const empty = document.getElementById('modelEmpty');
-      const status = document.getElementById('modelsStatus');
-
-      if (MODELES.length === 0) {
-        empty.innerHTML = `
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <p>Aucun modèle déclaré</p>
-          <p style="font-size:11px;margin-top:0.3rem;">Ajoutez vos fichiers dans <code>modeles3d/</code> et déclarez-les dans le tableau <code>MODELES</code> du script</p>`;
-        empty.style.display = '';
-        return;
-      }
-
-      empty.style.display = 'none';
-      let loaded = 0, errors = 0;
-
-      for (const filename of MODELES) {
-        const url = `modeles3d/${filename}`;
-        try {
-          const res = await fetch(url);
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const buffer = await res.arrayBuffer();
-          createModelCard(filename, buffer);
-          loaded++;
-        } catch(e) {
-          console.warn(`Impossible de charger ${filename}:`, e);
-          errors++;
-          createErrorCard(filename);
-        }
-      }
-
-      status.style.display = 'block';
-      if (errors === 0) {
-        status.className = 'models-status ok';
-        status.textContent = `✓ ${loaded} modèle${loaded>1?'s':''} chargé${loaded>1?'s':''} depuis modeles3d/`;
-      } else {
-        status.className = 'models-status err';
-        status.textContent = `${loaded} chargé${loaded>1?'s':''}, ${errors} erreur${errors>1?'s':''} — vérifiez les noms de fichiers et le serveur local`;
-      }
-    }
-
-    // ── Créer une carte modèle ──
-    function createModelCard(filename, buffer) {
-      const grid = document.getElementById('modelsGrid');
-      const name = filename.replace(/\.glb$/i, '');
-      const card = document.createElement('div');
-      card.className = 'model-card';
-      card.innerHTML = `
-        <div class="model-viewer" style="background:#1a1916;position:relative;height:180px;">
-          <div class="model-loading"><div class="spinner"></div> Rendu…</div>
-        </div>
-        <div class="model-info">
-          <div class="model-name">${name}</div>
-          <div class="model-meta" style="font-family:var(--mono);font-size:11px;color:var(--ink3);">Fusion 360 · .glb</div>
-        </div>
-        <div class="model-card-actions">
-          <button onclick="this.closest('.model-card')._openModal()">⤢ Voir en grand</button>
-        </div>`;
-      grid.appendChild(card);
-
-      const viewer = card.querySelector('.model-viewer');
-      const loading = card.querySelector('.model-loading');
-
-      // Thumbnail renderer
-      makeThumbnail(viewer, loading, buffer.slice(0)).then(stopFn => {
-        card._stopThumb = stopFn;
-      });
-
-      // Attach open modal
-      card._buffer = buffer;
-      card._name = name;
-      card._openModal = () => openModal(name, buffer);
-      viewer.style.cursor = 'pointer';
-      viewer.addEventListener('click', () => openModal(name, buffer));
-    }
-
-    function createErrorCard(filename) {
-      const grid = document.getElementById('modelsGrid');
-      const card = document.createElement('div');
-      card.className = 'model-card';
-      card.innerHTML = `
-        <div style="height:180px;background:#1a1916;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#ef4444;">
-          ⚠ Fichier introuvable
-        </div>
-        <div class="model-info">
-          <div class="model-name" style="color:var(--ink3);">${filename}</div>
-          <div class="model-meta" style="font-family:var(--mono);font-size:11px;color:#ef4444;">Vérifiez modeles3d/${filename}</div>
-        </div>`;
-      grid.appendChild(card);
-    }
-
-    // ── Miniature Three.js ──
-    async function makeThumbnail(container, loading, buffer) {
-      const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
-      const w = container.offsetWidth || 280, h = 180;
-      canvas.width = w; canvas.height = h;
-
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-      renderer.setSize(w, h);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.outputEncoding = THREE.sRGBEncoding;
-      renderer.setClearColor(0x1a1916, 1);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, w/h, 0.001, 10000);
-      camera.position.set(0, 1, 3);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const dl = new THREE.DirectionalLight(0xffffff, 1.2); dl.position.set(4,6,4); scene.add(dl);
-      const rl = new THREE.DirectionalLight(0xc8521a, 0.5); rl.position.set(-4,-2,-4); scene.add(rl);
-
-      return new Promise(res => {
-        const loader = new THREE.GLTFLoader();
-        loader.parse(buffer, '', gltf => {
-          const model = gltf.scene;
-          const box = new THREE.Box3().setFromObject(model);
-          const center = box.getCenter(new THREE.Vector3());
-          const size = box.getSize(new THREE.Vector3());
-          const maxD = Math.max(size.x, size.y, size.z) || 1;
-          const scale = 2 / maxD;
-          model.scale.setScalar(scale);
-          model.position.copy(center.multiplyScalar(-scale));
-          scene.add(model);
-          camera.lookAt(0, 0, 0);
-
-          loading.style.display = 'none';
-          container.appendChild(canvas);
-
-          let angle = 0, rafId;
-          const loop = () => {
-            rafId = requestAnimationFrame(loop);
-            angle += 0.008; model.rotation.y = angle;
-            renderer.render(scene, camera);
-          };
-          loop();
-          res(() => { cancelAnimationFrame(rafId); renderer.dispose(); });
-        }, err => {
-          loading.textContent = '⚠ Erreur rendu';
-          console.error(err); res(() => {});
-        });
-      });
-    }
-
-    // ══════════════════════════════════════════════
-    // MODAL VIEWER PLEIN ÉCRAN
-    // ══════════════════════════════════════════════
-    let _modalStop = null;
-
-    async function openModal(name, buffer) {
-      await threeReady;
-      document.getElementById('modelModal').style.display = 'flex';
-      document.getElementById('modalTitle').textContent = name + '.glb';
-
-      const canvas = document.getElementById('modalCanvas');
-      if (_modalStop) { _modalStop(); _modalStop = null; }
-
-      const w = canvas.clientWidth || 800, h = 520;
-      canvas.width = w; canvas.height = h;
-
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-      renderer.setSize(w, h); renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-      renderer.outputEncoding = THREE.sRGBEncoding; renderer.setClearColor(0x1a1916, 1);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, w/h, 0.001, 10000);
-      camera.position.set(0, 1.5, 4);
-
-      const controls = new THREE.OrbitControls(camera, canvas);
-      controls.enableDamping = true; controls.dampingFactor = 0.07;
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const dl = new THREE.DirectionalLight(0xffffff, 1.3); dl.position.set(5,8,5); scene.add(dl);
-      const rl = new THREE.DirectionalLight(0xc8521a, 0.5); rl.position.set(-5,-3,-5); scene.add(rl);
-      scene.add(new THREE.HemisphereLight(0x334466, 0x221100, 0.4));
-
-      const loader = new THREE.GLTFLoader();
-      loader.parse(buffer.slice(0), '', gltf => {
-        const model = gltf.scene;
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        const maxD = Math.max(size.x, size.y, size.z) || 1;
-        const scale = 3 / maxD;
-        model.scale.setScalar(scale);
-        model.position.copy(center.multiplyScalar(-scale));
-        scene.add(model);
-        controls.target.set(0,0,0); controls.update();
-
-        let rafId;
-        const loop = () => { rafId = requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); };
-        loop();
-        _modalStop = () => { cancelAnimationFrame(rafId); renderer.dispose(); };
-      }, err => console.error('Modal GLB error:', err));
-    }
-
-    function closeModal() {
-      if (_modalStop) { _modalStop(); _modalStop = null; }
-      document.getElementById('modelModal').style.display = 'none';
-    }
-    document.getElementById('modelModal').addEventListener('click', e => {
-      if (e.target === e.currentTarget) closeModal();
-    });
-
-    // ══════════════════════════════════════════════
-    // LANCEMENT
-    // ══════════════════════════════════════════════
-    loadModelsFromFolder();
-
+    drawCircuit('thumb1','#2a52be');
+    drawCircuit('thumb2','#c8521a');
+    drawCircuit('thumb3','#1a1916');
   </script>
 </body>
 </html>

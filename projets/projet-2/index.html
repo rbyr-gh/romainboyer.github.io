@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projet 2 — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Sora:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared.css">
+  <style>
+    .lang-switch{display:flex;gap:.3rem;}
+    .lang-btn{background:none;border:1px solid var(--border);border-radius:2px;padding:.2rem .55rem;font-family:var(--mono);font-size:11px;color:var(--ink3);cursor:pointer;transition:all var(--transition);}
+    .lang-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+    .lang-btn:hover:not(.active){border-color:var(--ink2);color:var(--ink2);}
+    [data-lang="fr"] [data-en]{display:none!important;}
+    [data-lang="en"] [data-fr]{display:none!important;}
+
+    .anim{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim-left{opacity:0;transform:translateX(-40px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim-right{opacity:0;transform:translateX(40px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim.visible,.anim-left.visible,.anim-right.visible{opacity:1;transform:none;}
+    .anim-d1{transition-delay:.07s;}.anim-d2{transition-delay:.14s;}.anim-d3{transition-delay:.21s;}
+
+    .page-wrap{max-width:1100px;margin:0 auto;padding:80px max(2rem,6vw) 80px;}
+    .breadcrumb{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:3rem;padding-top:60px;}
+    .breadcrumb a{color:var(--ink3);text-decoration:none;transition:color var(--transition);}
+    .breadcrumb a:hover{color:var(--accent);}
+    .breadcrumb-sep{opacity:.4;}
+
+    .project-header{margin-bottom:3.5rem;border-bottom:1px solid var(--border);padding-bottom:3rem;}
+    .project-header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;}
+    .project-type-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
+    .project-type-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent);}
+    .project-header h1{font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:1.1rem;}
+    .lead{font-size:1rem;font-weight:300;color:var(--ink2);max-width:560px;line-height:1.8;}
+    .project-tags-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;flex-shrink:0;}
+    .meta-item{padding:.9rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);min-width:100px;}
+    .meta-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem;}
+    .meta-value{font-size:13px;font-weight:600;}
+
+    .project-body{display:grid;grid-template-columns:1fr 280px;gap:3.5rem;align-items:start;}
+    .project-content h2{font-size:1.2rem;font-weight:600;letter-spacing:-.02em;margin:2rem 0 .8rem;}
+    .project-content h2:first-child{margin-top:0;}
+    .project-content p{color:var(--ink2);font-weight:300;line-height:1.85;margin-bottom:1rem;}
+    .project-content ul{list-style:none;padding:0;margin-bottom:1rem;}
+    .project-content li{display:flex;align-items:flex-start;gap:.6rem;color:var(--ink2);font-weight:300;line-height:1.7;margin-bottom:.4rem;}
+    .project-content li::before{content:'—';color:var(--accent);flex-shrink:0;font-family:var(--mono);font-size:12px;margin-top:2px;}
+    .project-content code{font-family:var(--mono);font-size:13px;background:var(--bg2);border:1px solid var(--border);padding:.12em .42em;border-radius:2px;color:var(--accent);}
+    .code-block{background:var(--ink);border-radius:var(--radius);padding:1.4rem 1.6rem;margin:1.5rem 0;overflow-x:auto;}
+    .code-block pre{font-family:var(--mono);font-size:12px;color:#e8e4d8;line-height:1.7;white-space:pre;}
+    .code-block .kw{color:#c8521a;}.code-block .cm{color:#6a6860;}.code-block .st{color:#7eb88a;}.code-block .nm{color:#8ab4e8;}
+
+    /* Galerie images */
+    .img-gallery{margin:2rem 0;}
+    .img-gallery-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem;}
+    .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;}
+    .img-item{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;background:var(--bg2);transition:border-color var(--transition),transform var(--transition);}
+    .img-item:hover{border-color:var(--ink);transform:translateY(-2px);}
+    .img-item img{width:100%;height:100%;object-fit:cover;display:block;}
+    .img-lightbox{display:none;position:fixed;inset:0;z-index:998;background:rgba(20,19,16,.95);align-items:center;justify-content:center;}
+    .img-lightbox.open{display:flex;}
+    .img-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;}
+    .img-lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;}
+    .img-lightbox-close:hover{opacity:1;}
+    .img-lightbox-caption{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.5);}
+
+    /* Image pleine largeur */
+    .project-image{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:1.5rem 0;}
+    .project-image img{display:block;width:100%;max-height:360px;object-fit:cover;}
+    .project-image-caption{font-family:var(--mono);font-size:11px;color:var(--ink3);padding:.6rem 1rem;border-top:1px solid var(--border);background:var(--bg2);}
+    .project-image-placeholder{height:180px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--ink3);border-style:dashed;border-width:1px;border-color:var(--border);}
+
+    .project-sidebar{display:flex;flex-direction:column;gap:1.2rem;}
+    .sidebar-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    .sidebar-card-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);padding:.8rem 1.2rem;border-bottom:1px solid var(--border);background:var(--bg2);}
+    .sidebar-card-body{padding:1.2rem;}
+    .sidebar-link{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:12px;color:var(--ink2);text-decoration:none;padding:.5rem 0;border-bottom:1px solid var(--bg2);transition:color var(--transition);}
+    .sidebar-link:last-child{border-bottom:none;}
+    .sidebar-link:hover{color:var(--accent);}
+
+    @media(max-width:900px){.project-body{grid-template-columns:1fr;}.meta-grid{grid-template-columns:repeat(4,1fr);}}
+    @media(max-width:600px){.meta-grid{grid-template-columns:1fr 1fr;}.project-header-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="../../index.html">// portfolio</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#apropos"><span data-fr>À propos</span><span data-en>About</span></a></li>
+      <li><a href="../../index.html#projets"><span data-fr>Projets</span><span data-en>Projects</span></a></li>
+      <li><a href="../../index.html#cv">CV</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr',this)">FR</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+
+    <nav class="breadcrumb">
+      <a href="../../index.html">Portfolio</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="../../index.html#projets"><span data-fr>Projets</span><span data-en>Projects</span></a>
+      <span class="breadcrumb-sep">/</span>
+      <span data-fr>Projet 2</span><span data-en>Project 2</span>
+    </nav>
+
+    <header class="project-header anim">
+      <div class="project-header-row">
+        <div>
+          <!-- ✏️ TYPE -->
+          <div class="project-type-label"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
+          <!-- ✏️ TITRE -->
+          <h1><span data-fr>Nom du Projet 2</span><span data-en>Project 2 Name</span></h1>
+          <!-- ✏️ DESCRIPTION -->
+          <p class="lead">
+            <span data-fr>Description courte. Ce projet n'inclut pas de modèle 3D.</span>
+            <span data-en>Short description. This project has no 3D model.</span>
+          </p>
+          <div class="project-tags-row">
+            <!-- ✏️ TAGS -->
+            <span class="tag">Arduino</span><span class="tag">Python</span><span class="tag">I²C</span><span class="tag">UART</span>
+          </div>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-item"><div class="meta-label" data-fr>Durée</div><div class="meta-label" data-en>Duration</div><div class="meta-value">6 <span data-fr>sem.</span><span data-en>wks</span></div></div>
+          <div class="meta-item"><div class="meta-label" data-fr>Année</div><div class="meta-label" data-en>Year</div><div class="meta-value">2024</div></div>
+          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value" data-fr>Scolaire</div><div class="meta-value" data-en>School</div></div>
+          <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value" data-fr>Terminé</div><div class="meta-value" data-en>Done</div></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="project-body">
+      <main class="project-content">
+
+        <h2 class="anim"><span data-fr>Contexte & Objectifs</span><span data-en>Context & Goals</span></h2>
+        <p class="anim" data-fr>Décrivez ici le contexte du projet. Quel problème vouliez-vous résoudre ?</p>
+        <p class="anim" data-en>Describe the project context here. What problem were you solving?</p>
+
+        <!-- ✏️ IMAGE PRINCIPALE — remplacez le placeholder par une vraie image -->
+        <div class="project-image anim">
+          <!-- <img src="schema.jpg" alt="Schéma du montage"> -->
+          <div class="project-image-placeholder"><span data-fr>[ Photo ou schéma du projet ]</span><span data-en>[ Project photo or schematic ]</span></div>
+          <div class="project-image-caption">// <span data-fr>Figure 1 — Schéma du montage électronique</span><span data-en>Figure 1 — Electronics schematic</span></div>
+        </div>
+
+        <h2 class="anim"><span data-fr>Architecture technique</span><span data-en>Technical Architecture</span></h2>
+        <p class="anim" data-fr>Expliquez l'architecture choisie. Comment les composants communiquent-ils ?</p>
+        <p class="anim" data-en>Explain the architecture. How do the components communicate?</p>
+        <ul class="anim">
+          <li data-fr>Microcontrôleur <code>Arduino Uno</code> comme nœud central</li>
+          <li data-en><code>Arduino Uno</code> as central node</li>
+          <li data-fr>Communication <code>I²C</code> avec les capteurs</li>
+          <li data-en><code>I²C</code> communication with sensors</li>
+          <li data-fr>Script <code>Python</code> pour la visualisation des données</li>
+          <li data-en><code>Python</code> script for data visualisation</li>
+          <li data-fr>Transmission <code>UART</code> entre Arduino et PC</li>
+          <li data-en><code>UART</code> link between Arduino and PC</li>
+        </ul>
+
+        <!-- ✏️ GALERIE D'IMAGES -->
+        <div class="img-gallery anim">
+          <div class="img-gallery-title"><span data-fr>Galerie</span><span data-en>Gallery</span></div>
+          <div class="img-grid">
+            <!-- Exemple :
+            <div class="img-item" onclick="openLight(this)">
+              <img src="photo1.jpg" alt="Description" data-caption="Légende de la photo">
+            </div>
+            -->
+            <div class="img-item" style="display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink3);border-style:dashed;">
+              <span style="text-align:center;padding:1rem;line-height:1.8;"><span data-fr>Ajoutez vos images ici</span><span data-en>Add your images here</span></span>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="anim"><span data-fr>Extrait de code</span><span data-en>Code snippet</span></h2>
+        <div class="code-block anim">
+          <pre><span class="cm">// Lecture capteur I²C — Arduino</span>
+<span class="kw">#include</span> <span class="st">&lt;Wire.h&gt;</span>
+
+<span class="kw">void</span> <span class="nm">setup</span>() {
+  Wire.<span class="nm">begin</span>();
+  Serial.<span class="nm">begin</span>(<span class="nm">9600</span>);
+}
+
+<span class="kw">void</span> <span class="nm">loop</span>() {
+  Wire.<span class="nm">requestFrom</span>(<span class="nm">0x48</span>, <span class="nm">2</span>);
+  <span class="kw">int</span> val = Wire.<span class="nm">read</span>() &lt;&lt; <span class="nm">8</span> | Wire.<span class="nm">read</span>();
+  Serial.<span class="nm">println</span>(val);
+  <span class="nm">delay</span>(<span class="nm">100</span>);
+}</pre>
+        </div>
+
+        <h2 class="anim"><span data-fr>Résultats & Apprentissages</span><span data-en>Results & Takeaways</span></h2>
+        <p class="anim" data-fr>Quels ont été les résultats ? Qu'avez-vous appris ? Quelles difficultés avez-vous rencontrées ?</p>
+        <p class="anim" data-en>What were the results? What did you learn? What challenges did you face?</p>
+
+      </main>
+
+      <aside class="project-sidebar">
+        <div class="sidebar-card anim anim-right">
+          <div class="sidebar-card-title"><span data-fr>Ressources</span><span data-en>Resources</span></div>
+          <div class="sidebar-card-body">
+            <a href="#" class="sidebar-link">⎋ GitHub</a>
+            <a href="#" class="sidebar-link">↓ <span data-fr>Rapport PDF</span><span data-en>PDF Report</span></a>
+          </div>
+        </div>
+        <div class="sidebar-card anim anim-right anim-d1">
+          <div class="sidebar-card-title"><span data-fr>Composants</span><span data-en>Components</span></div>
+          <div class="sidebar-card-body" style="font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:2.1;">
+            <!-- ✏️ LISTE COMPOSANTS -->
+            Arduino Uno<br>Capteur DHT22<br>Écran OLED 0.96"<br>Résistances pull-up
+          </div>
+        </div>
+        <a href="../../index.html#projets" class="btn btn-ghost anim anim-right anim-d2" style="width:100%;justify-content:center;">
+          ← <span data-fr>Tous les projets</span><span data-en>All projects</span>
+        </a>
+      </aside>
+    </div>
+
+  </div>
+
+  <div class="img-lightbox" id="lightbox" onclick="closeLight(event)">
+    <button class="img-lightbox-close" onclick="closeLight()">✕</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="img-lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2025 Prénom Nom</span>
+    <div class="footer-links">
+      <a href="../../index.html"><span data-fr>Accueil</span><span data-en>Home</span></a>
+      <a href="../../index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    function setLang(lang,btn){document.documentElement.setAttribute('data-lang',lang);document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');try{localStorage.setItem('portfolio-lang',lang);}catch(e){}}
+    try{const s=localStorage.getItem('portfolio-lang');if(s){document.documentElement.setAttribute('data-lang',s);document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===s));}}catch(e){}
+
+    const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.anim,.anim-left,.anim-right').forEach(el=>io.observe(el));
+
+    function openLight(el){const img=el.querySelector('img');if(!img)return;document.getElementById('lightboxImg').src=img.src;document.getElementById('lightboxCaption').textContent=img.dataset.caption||img.alt||'';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+    function closeLight(e){if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('img-lightbox-close'))return;document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}});
+  </script>
+</body>
+</html>

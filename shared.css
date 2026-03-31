@@ -1,0 +1,118 @@
+/* ═══════════════════════════════════════
+   SHARED STYLES — portfolio + projet pages
+   ═══════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f4f0;
+  --bg2: #eceae3;
+  --surface: #ffffff;
+  --ink: #1a1916;
+  --ink2: #4a4844;
+  --ink3: #8a8780;
+  --accent: #c8521a;
+  --accent2: #2a52be;
+  --border: #d8d5cc;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Sora', sans-serif;
+  --radius: 4px;
+  --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 max(2rem, 5vw);
+  height: 60px;
+  background: rgba(245,244,240,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: var(--accent); letter-spacing: 0.05em; text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-family: var(--mono); font-size: 12px; font-weight: 400;
+  color: var(--ink2); text-decoration: none;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: color var(--transition); position: relative;
+}
+.nav-links a::after {
+  content:''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width var(--transition);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; border-radius: var(--radius);
+  transition: all var(--transition); cursor: pointer; border: 1px solid;
+}
+.btn-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--ink); background: var(--bg2); }
+
+/* ── TAGS ── */
+.tag {
+  font-family: var(--mono); font-size: 12px;
+  padding: 0.3rem 0.65rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 2px; color: var(--ink2);
+}
+
+/* ── FADE-IN ── */
+.fade-in {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.55s cubic-bezier(.4,0,.2,1), transform 0.55s cubic-bezier(.4,0,.2,1);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── FOOTER ── */
+footer {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2.5rem max(2rem, 6vw);
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+}
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--ink3); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-family: var(--mono); font-size: 11px; color: var(--ink3);
+  text-decoration: none; transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--ink); }
+
+/* ── SPINNER ── */
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(200,82,26,0.3); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+}
