@@ -2,52 +2,63 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Modèle OBJ sans MTL</title>
+  <title>Portfolio 3D - OBJ</title>
   <style>
-    body { margin:0; overflow:hidden; }
-    canvas { display:block; }
+    body { margin:0; overflow:hidden; background:#f0f0f0; font-family:Arial,sans-serif; }
+    #canvas-container { width:100vw; height:100vh; }
+    h1 { position:absolute; top:20px; left:20px; color:#222; }
   </style>
 </head>
 <body>
 
+<h1>Mon modèle 3D (.obj)</h1>
+<div id="canvas-container"></div>
+
+<!-- Three.js et loaders -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/OBJLoader.js"></script>
 
 <script>
+  // Scène, caméra, renderer
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({antialias:true});
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  document.getElementById('canvas-container').appendChild(renderer.domElement);
 
   // Lumière
   const light = new THREE.DirectionalLight(0xffffff, 1);
-  light.position.set(1,1,1);
+  light.position.set(5,5,5);
   scene.add(light);
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-  // Charger le OBJ
+  // Charger le modèle OBJ
   const objLoader = new THREE.OBJLoader();
   objLoader.load('monmodele.obj', function(object){
-    // Appliquer un matériau simple à tous les enfants
+    // Appliquer un matériau visible à tout le modèle
     object.traverse(function(child){
-      if (child.isMesh){
-        child.material = new THREE.MeshNormalMaterial(); // couleur automatique
+      if(child.isMesh){
+        child.material = new THREE.MeshNormalMaterial();
       }
     });
+    object.scale.set(1,1,1);    // Ajuste la taille si nécessaire
+    object.position.set(0,0,0); // Centre le modèle
     scene.add(object);
-    object.position.y = -1;
+
+    // Animation du modèle
+    function animate(){
+      requestAnimationFrame(animate);
+      object.rotation.y += 0.01; // Rotation automatique
+      renderer.render(scene, camera);
+    }
+    animate();
+  }, undefined, function(error){
+    console.error('Erreur lors du chargement du modèle OBJ :', error);
   });
 
   camera.position.z = 5;
 
-  function animate(){
-    requestAnimationFrame(animate);
-    scene.rotation.y += 0.01; // rotation automatique
-    renderer.render(scene, camera);
-  }
-  animate();
-
+  // Ajustement responsive
   window.addEventListener('resize', ()=>{
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
