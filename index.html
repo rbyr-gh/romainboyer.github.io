@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Modèle OBJ</title>
+  <title>Modèle OBJ sans MTL</title>
   <style>
     body { margin:0; overflow:hidden; }
     canvas { display:block; }
@@ -12,10 +12,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/OBJLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/MTLLoader.js"></script>
 
 <script>
-  // Scène, caméra, renderer
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({antialias:true});
@@ -28,17 +26,17 @@
   scene.add(light);
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-  // Charger le .mtl puis le .obj
-  const mtlLoader = new THREE.MTLLoader();
-  mtlLoader.load('monmodele.mtl', function(materials){
-    materials.preload();
-
-    const objLoader = new THREE.OBJLoader();
-    objLoader.setMaterials(materials);
-    objLoader.load('monmodele.obj', function(object){
-      scene.add(object);
-      object.position.y = -1;
+  // Charger le OBJ
+  const objLoader = new THREE.OBJLoader();
+  objLoader.load('monmodele.obj', function(object){
+    // Appliquer un matériau simple à tous les enfants
+    object.traverse(function(child){
+      if (child.isMesh){
+        child.material = new THREE.MeshNormalMaterial(); // couleur automatique
+      }
     });
+    scene.add(object);
+    object.position.y = -1;
   });
 
   camera.position.z = 5;
