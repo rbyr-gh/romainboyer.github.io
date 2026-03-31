@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Mon Portfolio</title>
+  <meta charset="UTF-8">
+  <title>Portfolio Romain Boyer</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#f0f0f0; color:#333; }
+    header { background:#222; color:#fff; padding:20px; text-align:center; }
+    nav a { color:#fff; margin:0 10px; text-decoration:none; font-weight:bold; }
+    section { padding:40px 20px; text-align:center; }
+    #my3d { width:100%; height:400px; margin:0 auto; display:block; }
+    img { max-width:300px; margin-top:20px; border-radius:10px; }
+    h1,h2 { margin-bottom:20px; }
+    p { max-width:600px; margin:10px auto; line-height:1.5; }
+  </style>
 </head>
 <body>
-    <h1>Bienvenue sur mon portfolio !</h1>
-    <p>Travaux et projets ici.</p>
+
+<header>
+  <h1>Romain Boyer</h1>
+  <nav>
+    <a href="#about">À propos</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#3d">Animation 3D</a>
+  </nav>
+</header>
+
+<section id="about">
+  <h2>À propos de moi</h2>
+  <p>Bienvenue sur mon portfolio ! Je crée des sites interactifs avec animations 3D et design moderne. Voici un exemple de ce que je peux réaliser.</p>
+</section>
+
+<section id="portfolio">
+  <h2>Mes travaux</h2>
+  <img src="https://via.placeholder.com/300x200" alt="Exemple d'image">
+  <p>Voici un exemple de projet illustrant mes compétences en design web et animations.</p>
+</section>
+
+<section id="3d">
+  <h2>Animation 3D</h2>
+  <div id="my3d"></div>
+</section>
+
+<!-- Three.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+  // Initialisation scène, caméra et rendu
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(window.innerWidth, 400);
+  document.getElementById('my3d').appendChild(renderer.domElement);
+
+  // Cube 3D
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshNormalMaterial();
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+  camera.position.z = 5;
+
+  // Animation du cube
+  function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Ajustement responsive
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / 400;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, 400);
+  });
+</script>
+
 </body>
 </html>
