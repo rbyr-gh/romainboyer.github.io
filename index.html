@@ -2,138 +2,60 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
+  <title>Modèle OBJ</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-      background: #fff;
-      color: #111;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      padding: 15px 30px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: #111;
-      font-weight: bold;
-    }
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-    }
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 18px;
-      color: #555;
-    }
-    section {
-      padding: 60px 30px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .projects-grid {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .project-card {
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-    }
-    .project-card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    footer {
-      text-align: center;
-      padding: 30px 10px;
-      border-top: 1px solid #eee;
-      color: #666;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .contact-form button {
-      padding: 10px 15px;
-      border: none;
-      background: #000;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 4px;
-    }
+    body { margin:0; overflow:hidden; }
+    canvas { display:block; }
   </style>
 </head>
 <body>
 
-<header>
-  <div><strong>Mon Portfolio</strong></div>
-  <nav>
-    <a href="#about">À propos</a>
-    <a href="#projects">Projets</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/MTLLoader.js"></script>
 
-<section id="about" class="hero">
-  <h1>Salut, je suis [Ton Nom]</h1>
-  <p>Développeur / Designer passionné par la création d’expériences uniques.</p>
-</section>
+<script>
+  // Scène, caméra, renderer
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
-<section id="projects">
-  <h2>Projets récents</h2>
-  <div class="projects-grid">
-    <div class="project-card">
-      <img src="https://via.placeholder.com/400x250" alt="Projet 1">
-      <h3>Projet 1</h3>
-      <p>Description courte du projet.</p>
-    </div>
-    <div class="project-card">
-      <img src="https://via.placeholder.com/400x250" alt="Projet 2">
-      <h3>Projet 2</h3>
-      <p>Description courte du projet.</p>
-    </div>
-    <div class="project-card">
-      <img src="https://via.placeholder.com/400x250" alt="Projet 3">
-      <h3>Projet 3</h3>
-      <p>Description courte du projet.</p>
-    </div>
-  </div>
-</section>
+  // Lumière
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(1,1,1);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-<section id="contact">
-  <h2>Contact</h2>
-  <form class="contact-form">
-    <input type="text" placeholder="Ton nom" required>
-    <input type="email" placeholder="Ton email" required>
-    <textarea rows="5" placeholder="Ton message" required></textarea>
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
+  // Charger le .mtl puis le .obj
+  const mtlLoader = new THREE.MTLLoader();
+  mtlLoader.load('monmodele.mtl', function(materials){
+    materials.preload();
 
-<footer>
-  &copy; 2026 Mon Portfolio — Tous droits réservés
-</footer>
+    const objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.load('monmodele.obj', function(object){
+      scene.add(object);
+      object.position.y = -1;
+    });
+  });
+
+  camera.position.z = 5;
+
+  function animate(){
+    requestAnimationFrame(animate);
+    scene.rotation.y += 0.01; // rotation automatique
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
 
 </body>
 </html>
