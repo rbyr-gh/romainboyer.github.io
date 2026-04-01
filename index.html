@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr" data-lang="fr">
 <head>
+  <script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portfolio — Électronique & Informatique</title>
@@ -163,9 +166,11 @@
 </head>
 <body>
 
+
+
   <!-- ══ NAV ══ -->
   <nav>
-    <a class="nav-logo" href="#hero">// portfolio</a>
+    <a class="nav-logo" href="#hero">⇪</a>
     <ul class="nav-links">
       <li><a href="#apropos"><span data-fr>À propos</span><span data-en>About</span></a></li>
       <li><a href="#competences"><span data-fr>Compétences</span><span data-en>Skills</span></a></li>
@@ -205,7 +210,8 @@
       <div class="hero-infos">
         <span class="status-dot"></span><span data-fr>Disponible</span><span data-en>Available</span><br>
         <strong data-fr>Formation</strong><strong data-en>Education</strong>
-        ESEO - Ingénieur Généraliste<br>
+        <a href="https://www.eseo.fr/formations/cycle-ingenieur-eseo-statut-apprenti/" target="_blank" class="eseo-title">
+        <span data-fr>ESEO - Ingénieur Généraliste</span><span data-en>ESEO - Generalist Engineer</span> <br></a>
         <!-- ✏️ VILLE -->
         <strong data-fr>Localisation</strong><strong data-en>Location</strong>
         France<br>
@@ -227,9 +233,9 @@
         <p data-en>I am looking for an apprenticeship to learn from experienced professionals while contributing my curiosity and rigour to real projects.</p>
       </div>
       <div class="about-stats">
-        <div class="stat-box anim anim-scale anim-d1"><div class="num">3+</div><div class="label"><span data-fr>Projets réalisés</span><span data-en>Projects done</span></div></div>
+        <div class="stat-box anim anim-scale anim-d1"><div class="num">2</div><div class="label"><span data-fr>Projets réalisés</span><span data-en>Projects done</span></div></div>
         <div class="stat-box anim anim-scale anim-d2"><div class="num">2</div><div class="label"><span data-fr>Langages principaux</span><span data-en>Main languages</span></div></div>
-        <div class="stat-box anim anim-scale anim-d3"><div class="num">CAO</div><div class="label">Fusion 360</div></div>
+        <div class="stat-box anim anim-scale anim-d3"><div class="num">5</div><div class="label">Compétences techniques clés</div></div>
         <div class="stat-box anim anim-scale anim-d4"><div class="num">100%</div><div class="label"><span data-fr>Motivé</span><span data-en>Motivated</span></div></div>
       </div>
     </div>
@@ -243,32 +249,37 @@
       <div class="skill-cat anim anim-d1">
         <div class="skill-cat-title"><span data-fr>Électronique</span><span data-en>Electronics</span></div>
         <div class="skill-tags">
-          <span class="tag" data-fr>Analogique</span><span class="tag" data-en>Analog</span>
-          <span class="tag" data-fr>Numérique</span><span class="tag" data-en>Digital</span>
-          <span class="tag">PCB</span><span class="tag">Op-Amp</span>
+          <span class="tag" data-fr>Conception  de circuit électronique</span><span class="tag" data-en>Electronic circuit design</span>
+          <span class="tag" data-fr>Simulation électronique</span><span class="tag" data-en>Electronic simulation</span>
           <span class="tag" data-fr>Oscilloscope</span><span class="tag" data-en>Oscilloscope</span>
+        </div>
+      </div>
+      <div class="skill-cat anim anim-d3">
+        <div class="skill-cat-title"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
+        <div class="skill-tags">
+          <span class="tag">Programmation MCU</span><span class="tag" data-en>MCU Programming</span>
+          <span class="tag" data-fr>UART / SPI / I²C / CAN ...</span>
         </div>
       </div>
       <div class="skill-cat anim anim-d2">
         <div class="skill-cat-title"><span data-fr>Programmation</span><span data-en>Programming</span></div>
         <div class="skill-tags">
           <span class="tag">C / C++</span><span class="tag">Python</span>
-          <span class="tag">Arduino</span><span class="tag">STM32</span><span class="tag">I²C / SPI</span>
-        </div>
-      </div>
-      <div class="skill-cat anim anim-d3">
-        <div class="skill-cat-title"><span data-fr>CAO & Conception</span><span data-en>CAD & Design</span></div>
-        <div class="skill-tags">
-          <span class="tag">Fusion 360</span>
-          <span class="tag" data-fr>Impression 3D</span><span class="tag" data-en>3D Printing</span>
-          <span class="tag">KiCad</span>
         </div>
       </div>
       <div class="skill-cat anim anim-d4">
         <div class="skill-cat-title"><span data-fr>Outils</span><span data-en>Tools</span></div>
         <div class="skill-tags">
           <span class="tag">Git</span><span class="tag">Linux</span>
-          <span class="tag">VS Code</span><span class="tag">LaTeX</span>
+          <span class="tag">Matlab/Simulink</span><span class="tag">LTSpice</span>
+          <span class="tag">KiCad</span><span class="tag">Altium</span>
+        </div>
+      </div>
+      <div class="skill-cat anim anim-d3">
+        <div class="skill-cat-title"><span data-fr>CAO & Conception</span><span data-en>CAD & Design</span></div>
+        <div class="skill-tags">
+          <span class="tag">Fusion</span>
+          <span class="tag" data-fr>Impression 3D</span><span class="tag" data-en>3D Printing</span>
         </div>
       </div>
     </div>
@@ -283,44 +294,38 @@
       <!-- Projet 1 — avec 3D -->
       <a class="project-card anim anim-d1" href="projets/projet-1/index.html">
         <div class="project-thumb" id="thumb1">
-          <!-- ✏️ Décommentez et renseignez l'image de couverture -->
-          <!-- <img src="projets/projet-1/cover.jpg" alt="Projet 1"> -->
-          <div class="project-thumb-overlay"></div>
-          <span class="project-has3d">3D</span>
-          <span class="thumb-label">Schéma · PCB</span>
-          <span class="thumb-arrow">→</span>
+          <img src="images/brasrobotique.png" alt="Projet 2">
+          <span class="project-has3d">2025</span>
         </div>
         <div class="project-body">
           <!-- ✏️ TYPE -->
-          <div class="project-type"><span data-fr>Électronique embarquée</span><span data-en>Embedded electronics</span></div>
+          <div class="project-type"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
           <!-- ✏️ TITRE -->
-          <div class="project-title"><span data-fr>Projet 1 — À personnaliser</span><span data-en>Project 1 — To customise</span></div>
+          <div class="project-title"><span data-fr>Bras robotique</span><span data-en>Robotic arm</span></div>
           <!-- ✏️ DESCRIPTION -->
-          <p class="project-desc"><span data-fr>Description courte du projet : objectif, technologie, résultat.</span><span data-en>Short project description: objective, technology, result.</span></p>
-          <div class="project-tags"><span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion 360</span></div>
+          <p class="project-desc"><span data-fr>Bras robotique sur 4 axes, programmé sur une carte Nucleo.</span><span data-en>4-axis robotic arm, programmed on a Nucleo board.</span></p>
+          <div class="project-tags"><span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion</span><span class="tag">KiCad</span></div>
         </div>
       </a>
 
       <!-- Projet 2 — sans 3D -->
       <a class="project-card anim anim-d2" href="projets/projet-2/index.html">
         <div class="project-thumb" id="thumb2">
-          <!-- <img src="projets/projet-2/cover.jpg" alt="Projet 2"> -->
-          <div class="project-thumb-overlay"></div>
-          <span class="thumb-label">Firmware · Capteurs</span>
-          <span class="thumb-arrow">→</span>
+          <img src="images/cablage.jpg" alt="Projet 2">
+          <span class="project-has3d">2024</span>
         </div>
         <div class="project-body">
           <div class="project-type"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
-          <div class="project-title"><span data-fr>Projet 2 — À personnaliser</span><span data-en>Project 2 — To customise</span></div>
-          <p class="project-desc"><span data-fr>Description courte du projet : objectif, technologie, résultat.</span><span data-en>Short project description: objective, technology, result.</span></p>
-          <div class="project-tags"><span class="tag">Arduino</span><span class="tag">Python</span><span class="tag">I²C</span></div>
+          <div class="project-title"><span data-fr>Loquet contrôlé par clavier matriciel</span><span data-en>Latch controlled by matrix keypad</span></div>
+          <p class="project-desc"><span data-fr>Loquet électronique, contrôlé par clavier matriciel, LED et gâche. </span><span data-en>Electronic latch, controlled via matrix keypad, LEDs, and electric strike.</span></p>
+          <div class="project-tags"><span class="tag">C</span><span class="tag">PCB</span><span class="tag">STM32</span></div>
         </div>
       </a>
 
-      <!-- Projet 3 — avec 3D -->
+      <!-- Projet 3 — avec 3D 
       <a class="project-card anim anim-d3" href="projets/projet-3/index.html">
         <div class="project-thumb" id="thumb3">
-          <!-- <img src="projets/projet-3/cover.jpg" alt="Projet 3"> -->
+          <img src="projets/projet-3/cover.jpg" alt="Projet 3"> 
           <div class="project-thumb-overlay"></div>
           <span class="project-has3d">3D</span>
           <span class="thumb-label">CAO · Impression 3D</span>
@@ -332,7 +337,7 @@
           <p class="project-desc"><span data-fr>Boîtier, assemblage mécanique ou pièce sur mesure.</span><span data-en>Enclosure, mechanical assembly or custom part.</span></p>
           <div class="project-tags"><span class="tag">Fusion 360</span><span class="tag">FDM</span></div>
         </div>
-      </a>
+      </a>-->
 
     </div>
   </section>
@@ -349,17 +354,18 @@
           <!-- ✏️ FORMATIONS -->
           <div class="cv-line">
             <div>
-              <div class="cv-line-title"><span data-fr>BTS / BUT Électronique & Informatique</span><span data-en>HND Electronics & Computer Science</span></div>
-              <div class="cv-line-sub"><span data-fr>École / IUT · Ville</span><span data-en>School · City</span></div>
+              <div class="cv-line-title"><span data-fr>Ingénieur en électronique et informatique </span><span data-en>Electronics and Computer Engineer</span></div>
+              <div class="cv-line-sub"><span data-fr>École Supérieure d’Électronique de l’Ouest (ESEO) · Angers</span><span data-en>ESEO · Angers, France</span></div>
             </div>
-            <div class="cv-line-date">2023–2025</div>
+            <div class="cv-line-date">2024 – EN COURS</div>
           </div>
           <div class="cv-line">
             <div>
-              <div class="cv-line-title"><span data-fr>Baccalauréat STI2D</span><span data-en>STI2D Baccalaureate</span></div>
-              <div class="cv-line-sub"><span data-fr>Lycée · Ville</span><span data-en>High School · City</span></div>
+              <div class="cv-line-title"><span data-fr>Baccalauréat général </span><span data-en>General Baccalaureate</span></div>
+              <div class="cv-line-sub"><span data-fr>Sacré-Coeur La Salle · Angers</span><span data-en>Sacré-Coeur La Salle · Angers, France</span></div>
+              <div class="cv-group-label"><span data-fr>Options "Mathématiques" et "Numériques et Sciences Informatiques (NSI)"</span><span data-en>Option "Mathematics" and "Digital Technology and Computer Science"</span></div>
             </div>
-            <div class="cv-line-date">2023</div>
+            <div class="cv-line-date">2021 - 2024</div>
           </div>
         </div>
         <div class="cv-group">
@@ -367,10 +373,10 @@
           <!-- ✏️ EXPÉRIENCES -->
           <div class="cv-line">
             <div>
-              <div class="cv-line-title"><span data-fr>Stage / Alternance — À compléter</span><span data-en>Internship / Apprenticeship — To fill</span></div>
-              <div class="cv-line-sub"><span data-fr>Entreprise · Poste</span><span data-en>Company · Role</span></div>
+              <div class="cv-line-title"><span data-fr>Vendeur en boulangerie</span><span data-en>Bakery salesman</span></div>
+              <div class="cv-line-sub"><span data-fr>Maison Becam · 9,5 heures par semaine</span><span data-en>Maison Becam · 9.5 hours per week</span></div>
             </div>
-            <div class="cv-line-date">Dates</div>
+            <div class="cv-line-date">DEPUIS MAI 2025</div>
           </div>
         </div>
       </div>
@@ -410,8 +416,8 @@
     <div class="section-label anim" data-num="05">Contact</div>
     <h2 class="anim anim-d1"><span data-fr>Travaillons ensemble</span><span data-en>Let's work together</span></h2>
     <p class="contact-intro anim">
-      <span data-fr>Vous cherchez un alternant motivé en électronique et informatique embarquée ? N'hésitez pas à me contacter via l'un de ces canaux.</span>
-      <span data-en>Looking for a motivated apprentice in electronics and embedded systems? Feel free to reach out through any of the channels below.</span>
+      <span data-fr>Vous cherchez un alternant motivé en électronique et informatique ? N'hésitez pas à me contacter via l'un de ces canaux.</span>
+      <span data-en>Looking for a motivated apprentice in electronics and computer science? Feel free to reach out through any of the channels below.</span>
     </p>
     <div class="contact-links-row anim anim-d1">
       <!-- ✏️ EMAIL -->

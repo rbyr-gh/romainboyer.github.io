@@ -100,12 +100,13 @@
 <body>
 
   <nav>
-    <a class="nav-logo" href="../../index.html">// portfolio</a>
+    <a class="nav-logo" href="#hero">// portfolio</a>
     <ul class="nav-links">
-      <li><a href="../../index.html#apropos"><span data-fr>À propos</span><span data-en>About</span></a></li>
-      <li><a href="../../index.html#projets"><span data-fr>Projets</span><span data-en>Projects</span></a></li>
-      <li><a href="../../index.html#cv">CV</a></li>
-      <li><a href="../../index.html#contact">Contact</a></li>
+      <li><a href="#apropos"><span data-fr>À propos</span><span data-en>About</span></a></li>
+      <li><a href="#competences"><span data-fr>Compétences</span><span data-en>Skills</span></a></li>
+      <li><a href="#projets"><span data-fr>Projets</span><span data-en>Projects</span></a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('fr',this)">FR</button>
@@ -121,7 +122,7 @@
       <a href="../../index.html#projets"><span data-fr>Projets</span><span data-en>Projects</span></a>
       <span class="breadcrumb-sep">/</span>
       <!-- ✏️ NOM DU PROJET -->
-      <span data-fr>Projet 1</span><span data-en>Project 1</span>
+      <span data-fr>Bras robotique</span><span data-en>Robotic arm</span>
     </nav>
 
     <!-- ══ EN-TÊTE ══ -->
@@ -129,24 +130,24 @@
       <div class="project-header-row">
         <div>
           <!-- ✏️ TYPE -->
-          <div class="project-type-label"><span data-fr>Électronique embarquée</span><span data-en>Embedded electronics</span></div>
+          <div class="project-type-label"><span data-fr>Systèmes embarqués</span><span data-en>Embedded systems</span></div>
           <!-- ✏️ TITRE -->
-          <h1><span data-fr>Nom du Projet 1</span><span data-en>Project 1 Name</span></h1>
+          <h1><span data-fr>Bras robotique</span><span data-en>Robotic arm</span></h1>
           <!-- ✏️ DESCRIPTION COURTE -->
           <p class="lead">
-            <span data-fr>Description courte et accrocheuse. Expliquez l'objectif principal en une ou deux phrases.</span>
-            <span data-en>Short and punchy description. State the main objective in one or two sentences.</span>
+            <span data-fr>Il s’agissait d’un projet à mener de manière autonome sur une durée d’un mois et demi, en parallèle du programme pédagogique.</span>
+            <span data-en>This was a project to be carried out independently over a period of one and a half months, in parallel with the educational program.</span>
           </p>
           <div class="project-tags-row">
             <!-- ✏️ TAGS -->
-            <span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion 360</span><span class="tag">KiCad</span>
+            <span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion</span><span class="tag">KiCad</span>
           </div>
         </div>
         <div class="meta-grid">
           <!-- ✏️ MÉTADONNÉES -->
-          <div class="meta-item"><div class="meta-label" data-fr>Durée</div><div class="meta-label" data-en>Duration</div><div class="meta-value">3 <span data-fr>mois</span><span data-en>months</span></div></div>
-          <div class="meta-item"><div class="meta-label" data-fr>Année</div><div class="meta-label" data-en>Year</div><div class="meta-value">2024</div></div>
-          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value" data-fr>Personnel</div><div class="meta-value" data-en>Personal</div></div>
+          <div class="meta-item"><div class="meta-label" data-fr>Durée</div><div class="meta-label" data-en>Duration</div><div class="meta-value">1,5 <span data-fr>mois</span><span data-en>months</span></div></div>
+          <div class="meta-item"><div class="meta-label" data-fr>Année</div><div class="meta-label" data-en>Year</div><div class="meta-value">2025</div></div>
+          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value" data-fr>Pédagogique</div><div class="meta-value" data-en>Educational</div></div>
           <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value" data-fr>Terminé</div><div class="meta-value" data-en>Done</div></div>
         </div>
       </div>
@@ -159,24 +160,25 @@
 
         <h2 class="anim"><span data-fr>Contexte & Objectifs</span><span data-en>Context & Goals</span></h2>
         <!-- ✏️ CONTENU FR/EN -->
-        <p class="anim anim-d1" data-fr>Décrivez ici pourquoi vous avez réalisé ce projet. Quel problème vouliez-vous résoudre ? Quel était le cahier des charges ?</p>
-        <p class="anim anim-d1" data-en>Describe why you built this project. What problem were you solving? What were the specifications?</p>
+        <p class="anim anim-d1" data-fr>Dans de nombreuses industries (assemblage, manutention, impression 3D, laboratoire), certaines tâches répétitives ou dangereuses nécessitent une intervention humaine constante. Pour réduire les efforts physiques, augmenter la précision et la sécurité, il est apparu opportun de développer un bras robotisé capable de manipuler des objets dans un environnement contrôlé.</p>
+        <p class="anim anim-d1" data-en>In many industries (assembly, handling, 3D printing, laboratories), certain repetitive or dangerous tasks require constant human intervention. To reduce physical strain and increase precision and safety, it became necessary to develop a robotic arm capable of manipulating objects in a controlled environment.</p>
 
         <!-- ✏️ GALERIE D'IMAGES — ajoutez vos images dans le dossier du projet -->
         <!-- Supprimez ou complétez ce bloc selon vos images -->
         <div class="img-gallery anim">
-          <div class="img-gallery-title"><span data-fr>Photos & schémas</span><span data-en>Photos & schematics</span></div>
+          <div class="img-gallery-title"><span data-fr>Photos, schémas, vidéos</span><span data-en>Photos, schematics, videos</span></div>
           <div class="img-grid">
-            <!-- Exemple : <div class="img-item" onclick="openLight(this)"><img src="schema.jpg" alt="Schéma électrique" data-caption="Schéma électrique — KiCad"></div> -->
-            <div class="img-item" style="display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink3);border-style:dashed;">
-              <span style="text-align:center;padding:1rem;line-height:1.8;"><span data-fr>Ajoutez vos images<br>ici</span><span data-en>Add your images<br>here</span></span>
-            </div>
+            <video width="230" height="168" controls muted><source src="video.mov" type="video/mp4">Votre navigateur ne supporte pas la balise vidéo.</video>
+            <video width="230" height="168" controls muted><source src="video2.mov" type="video/mp4">Votre navigateur ne supporte pas la balise vidéo.</video>
+            <div class="img-item" onclick="openLight(this)"><img src="BrasRobotique.jpg" alt="Schéma électrique" data-caption="Schéma électrique — KiCad"></div>
           </div>
         </div>
 
         <h2 class="anim"><span data-fr>Conception & Réalisation</span><span data-en>Design & Implementation</span></h2>
-        <p class="anim" data-fr>Expliquez les étapes de conception, les choix techniques, les difficultés rencontrées.</p>
-        <p class="anim" data-en>Explain the design process, technical choices, and challenges encountered.</p>
+        <p class="anim" data-fr>La position des servomoteurs est réglée à l’aide des potentiomètres, tandis que le moteur pas à pas est commandé par deux boutons poussoirs permettant de le faire tourner dans le sens horaire ou antihoraire. L’écran, non représenté sur le schéma, affiche la position de chaque moteur ainsi qu’une illustration de la position du bras robotique.</p>
+        <p class="anim" data-en>The servo motors are positioned using potentiometers, while the stepper motor is controlled by two pushbuttons, allowing it to rotate clockwise or counterclockwise. The screen, not shown in the diagram, displays the position of each motor as well as an illustration of the robotic arm's position.</p>
+        <p class="anim" data-fr>Les étapes de développement :</p>
+        <p class="anim" data-en>Development steps :</p>
         <ul class="anim">
           <li data-fr>Étape 1 : conception du schéma sous <code>KiCad</code></li>
           <li data-en>Step 1: schematic design with <code>KiCad</code></li>
@@ -188,10 +190,10 @@
           <li data-en>Step 4: 3D printing and assembly</li>
         </ul>
 
-        <h2 class="anim"><span data-fr>Résultats & Apprentissages</span><span data-en>Results & Takeaways</span></h2>
-        <p class="anim" data-fr>Quels ont été les résultats ? Qu'avez-vous appris ? Comment amélioreriez-vous ce projet ?</p>
-        <p class="anim" data-en>What were the results? What did you learn? How would you improve this project?</p>
-
+        <a href="../../index.html#projets" class="btn btn-ghost anim anim-right anim-d2" style="width:100%;justify-content:center;">
+          <span></span>
+          ← <span data-fr>Tous les projets</span><span data-en>All projects</span>
+        </a>
       </main>
 
       <!-- ══ SIDEBAR ══ -->
@@ -220,20 +222,22 @@
           </div>
         </div>
 
+        <div class="sidebar-card anim anim-right anim-d1">
+          <div class="sidebar-card-title"><span data-fr>Composants</span><span data-en>Components</span></div>
+          <div class="sidebar-card-body" style="font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:2.1;">
+            <!-- ✏️ LISTE COMPOSANTS -->
+            MCU Nucleo-G431KB<br>Stepper motor driver "TB6600"<br>Stepper motor "Nema 17"<br>Servo motors<br>Potentiometers<br>TFT Screen "ILI9341"
+          </div>
+        </div>
+
         <!-- Ressources -->
         <div class="sidebar-card anim anim-right anim-d1">
           <div class="sidebar-card-title"><span data-fr>Ressources</span><span data-en>Resources</span></div>
           <div class="sidebar-card-body">
             <!-- ✏️ LIENS -->
-            <a href="#" class="sidebar-link">⎋ GitHub</a>
-            <a href="#" class="sidebar-link">↓ <span data-fr>Rapport PDF</span><span data-en>PDF Report</span></a>
-            <a href="#" class="sidebar-link">↓ <span data-fr>Schéma KiCad</span><span data-en>KiCad schematic</span></a>
+            <a href="https://github.com/rbyr-gh/robotic-arm" class="sidebar-link">⎋ GitHub</a>
           </div>
         </div>
-
-        <a href="../../index.html#projets" class="btn btn-ghost anim anim-right anim-d2" style="width:100%;justify-content:center;">
-          ← <span data-fr>Tous les projets</span><span data-en>All projects</span>
-        </a>
 
       </aside>
     </div>
@@ -248,7 +252,7 @@
   </div>
 
   <footer>
-    <span class="footer-copy">© 2025 Prénom Nom</span>
+    <span class="footer-copy">© 2026 Romain Boyer</span>
     <div class="footer-links">
       <a href="../../index.html"><span data-fr>Accueil</span><span data-en>Home</span></a>
       <a href="../../index.html#contact">Contact</a>
