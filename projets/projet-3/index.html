@@ -3,98 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-fr-title="Projet 1 — Portfolio" data-en-title="Project 1 — Portfolio">Projet 1 — Portfolio</title>
+  <title data-fr-title="Loquet contrôlé par clavier matriciel" data-en-title="Latch controlled by matrix keypad">Latch controlled by matrix keypad</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Sora:wght@200;300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../shared.css">
   <style>
-    /* ══ LANGUE ══ */
-    .lang-switch { display:flex; gap:.3rem; }
-    .lang-btn { background:none; border:1px solid var(--border); border-radius:2px; padding:.2rem .55rem; font-family:var(--mono); font-size:11px; color:var(--ink3); cursor:pointer; transition:all var(--transition); }
-    .lang-btn.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-    .lang-btn:hover:not(.active) { border-color:var(--ink2); color:var(--ink2); }
-    [data-lang="fr"] [data-en] { display:none !important; }
-    [data-lang="en"] [data-fr] { display:none !important; }
+    .lang-switch{display:flex;gap:.3rem;}
+    .lang-btn{background:none;border:1px solid var(--border);border-radius:2px;padding:.2rem .55rem;font-family:var(--mono);font-size:11px;color:var(--ink3);cursor:pointer;transition:all var(--transition);}
+    .lang-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+    .lang-btn:hover:not(.active){border-color:var(--ink2);color:var(--ink2);}
+    [data-lang="fr"] [data-en]{display:none!important;}
+    [data-lang="en"] [data-fr]{display:none!important;}
 
-    /* ══ ANIMATIONS ══ */
-    .anim       { opacity:0; transform:translateY(28px); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1); }
-    .anim-left  { opacity:0; transform:translateX(-40px); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1); }
-    .anim-right { opacity:0; transform:translateX(40px); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .6s cubic-bezier(.4,0,.2,1); }
-    .anim.visible,.anim-left.visible,.anim-right.visible { opacity:1; transform:none; }
-    .anim-d1{transition-delay:.07s;} .anim-d2{transition-delay:.14s;} .anim-d3{transition-delay:.21s;}
+    .anim{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim-left{opacity:0;transform:translateX(-40px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim-right{opacity:0;transform:translateX(40px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+    .anim.visible,.anim-left.visible,.anim-right.visible{opacity:1;transform:none;}
+    .anim-d1{transition-delay:.07s;}.anim-d2{transition-delay:.14s;}.anim-d3{transition-delay:.21s;}
 
-    /* ══ LAYOUT ══ */
-    .page-wrap { max-width:1100px; margin:0 auto; padding:80px max(2rem,6vw) 80px; }
-    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:11px; color:var(--ink3); margin-bottom:3rem; padding-top:60px; }
-    .breadcrumb a { color:var(--ink3); text-decoration:none; transition:color var(--transition); }
-    .breadcrumb a:hover { color:var(--accent); }
-    .breadcrumb-sep { opacity:.4; }
+    .page-wrap{max-width:1100px;margin:0 auto;padding:80px max(2rem,6vw) 80px;}
+    .breadcrumb{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:3rem;padding-top:60px;}
+    .breadcrumb a{color:var(--ink3);text-decoration:none;transition:color var(--transition);}
+    .breadcrumb a:hover{color:var(--accent);}
+    .breadcrumb-sep{opacity:.4;}
 
-    /* ══ EN-TÊTE ══ */
-    .project-header { margin-bottom:3.5rem; border-bottom:1px solid var(--border); padding-bottom:3rem; }
-    .project-header-row { display:flex; justify-content:space-between; align-items:flex-start; gap:2rem; flex-wrap:wrap; }
-    .project-type-label { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.8rem; display:flex; align-items:center; gap:.7rem; }
-    .project-type-label::before { content:''; display:inline-block; width:20px; height:1px; background:var(--accent); }
-    .project-header h1 { font-size:clamp(1.9rem,4vw,3rem); font-weight:700; letter-spacing:-.03em; line-height:1.1; margin-bottom:1.1rem; }
-    .lead { font-size:1rem; font-weight:300; color:var(--ink2); max-width:560px; line-height:1.8; }
-    .project-tags-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
-    .meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; flex-shrink:0; }
-    .meta-item { padding:.9rem 1.1rem; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); min-width:100px; }
-    .meta-label { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:.3rem; }
-    .meta-value { font-size:13px; font-weight:600; }
+    .project-header{margin-bottom:3.5rem;border-bottom:1px solid var(--border);padding-bottom:3rem;}
+    .project-header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;}
+    .project-type-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
+    .project-type-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent);}
+    .project-header h1{font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:1.1rem;}
+    .lead{font-size:1rem;font-weight:300;color:var(--ink2);max-width:560px;line-height:1.8;}
+    .project-tags-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;flex-shrink:0;}
+    .meta-item{padding:.9rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);min-width:100px;}
+    .meta-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem;}
+    .meta-value{font-size:13px;font-weight:600;}
 
-    /* ══ CORPS ══ */
-    .project-body { display:grid; grid-template-columns:1fr 340px; gap:3.5rem; align-items:start; }
-    .project-content h2 { font-size:1.2rem; font-weight:600; letter-spacing:-.02em; margin:2rem 0 .8rem; }
-    .project-content h2:first-child { margin-top:0; }
-    .project-content p { color:var(--ink2); font-weight:300; line-height:1.85; margin-bottom:1rem; }
-    .project-content ul { list-style:none; padding:0; margin-bottom:1rem; }
-    .project-content li { display:flex; align-items:flex-start; gap:.6rem; color:var(--ink2); font-weight:300; line-height:1.7; margin-bottom:.4rem; }
-    .project-content li::before { content:'—'; color:var(--accent); flex-shrink:0; font-family:var(--mono); font-size:12px; margin-top:2px; }
-    .project-content code { font-family:var(--mono); font-size:13px; background:var(--bg2); border:1px solid var(--border); padding:.12em .42em; border-radius:2px; color:var(--accent); }
+    .project-body{display:grid;grid-template-columns:1fr 280px;gap:3.5rem;align-items:start;}
+    .project-content h2{font-size:1.2rem;font-weight:600;letter-spacing:-.02em;margin:2rem 0 .8rem;}
+    .project-content h2:first-child{margin-top:0;}
+    .project-content p{color:var(--ink2);font-weight:300;line-height:1.85;margin-bottom:1rem;}
+    .project-content ul{list-style:none;padding:0;margin-bottom:1rem;}
+    .project-content li{display:flex;align-items:flex-start;gap:.6rem;color:var(--ink2);font-weight:300;line-height:1.7;margin-bottom:.4rem;}
+    .project-content li::before{content:'—';color:var(--accent);flex-shrink:0;font-family:var(--mono);font-size:12px;margin-top:2px;}
+    .project-content code{font-family:var(--mono);font-size:13px;background:var(--bg2);border:1px solid var(--border);padding:.12em .42em;border-radius:2px;color:var(--accent);}
+    .code-block{background:var(--ink);border-radius:var(--radius);padding:1.4rem 1.6rem;margin:1.5rem 0;overflow-x:auto;}
+    .code-block pre{font-family:var(--mono);font-size:12px;color:#e8e4d8;line-height:1.7;white-space:pre;}
+    .code-block .kw{color:#c8521a;}.code-block .cm{color:#6a6860;}.code-block .st{color:#7eb88a;}.code-block .nm{color:#8ab4e8;}
 
-    /* ══ GALERIE IMAGES ══ */
-    .img-gallery { margin:2rem 0; }
-    .img-gallery-title { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin-bottom:1rem; }
-    .img-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:.8rem; }
-    .img-item { border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; position:relative; aspect-ratio:4/3; background:var(--bg2); transition:border-color var(--transition), transform var(--transition); }
-    .img-item:hover { border-color:var(--ink); transform:translateY(-2px); }
-    .img-item img { width:100%; height:100%; object-fit:cover; display:block; }
-    .img-lightbox { display:none; position:fixed; inset:0; z-index:998; background:rgba(20,19,16,.95); align-items:center; justify-content:center; }
-    .img-lightbox.open { display:flex; }
-    .img-lightbox img { max-width:90vw; max-height:90vh; object-fit:contain; border-radius:4px; }
-    .img-lightbox-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:none; color:#fff; font-size:1.8rem; cursor:pointer; opacity:.7; transition:opacity var(--transition); }
-    .img-lightbox-close:hover { opacity:1; }
-    .img-lightbox-caption { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:11px; color:rgba(255,255,255,.5); }
+    /* Galerie images */
+    .img-gallery{margin:2rem 0;}
+    .img-gallery-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem;}
+    .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;}
+    .img-item{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;background:var(--bg2);transition:border-color var(--transition),transform var(--transition);}
+    .img-item:hover{border-color:var(--ink);transform:translateY(-2px);}
+    .img-item img{width:100%;height:100%;object-fit:cover;display:block;}
+    .img-lightbox{display:none;position:fixed;inset:0;z-index:998;background:rgba(20,19,16,.95);align-items:center;justify-content:center;}
+    .img-lightbox.open{display:flex;}
+    .img-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;}
+    .img-lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;opacity:.7;}
+    .img-lightbox-close:hover{opacity:1;}
+    .img-lightbox-caption{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.5);}
 
-    /* ══ SIDEBAR ══ */
-    .project-sidebar { display:flex; flex-direction:column; gap:1.2rem; }
-    .sidebar-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
-    .sidebar-card-title { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); padding:.8rem 1.2rem; border-bottom:1px solid var(--border); background:var(--bg2); }
-    .sidebar-card-body { padding:1.2rem; }
-    .sidebar-link { display:flex; align-items:center; gap:.6rem; font-family:var(--mono); font-size:12px; color:var(--ink2); text-decoration:none; padding:.5rem 0; border-bottom:1px solid var(--bg2); transition:color var(--transition); }
-    .sidebar-link:last-child { border-bottom:none; }
-    .sidebar-link:hover { color:var(--accent); }
+    /* Image pleine largeur */
+    .project-image{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:1.5rem 0;}
+    .project-image img{display:block;width:100%;max-height:360px;object-fit:cover;}
+    .project-image-caption{font-family:var(--mono);font-size:11px;color:var(--ink3);padding:.6rem 1rem;border-top:1px solid var(--border);background:var(--bg2);}
+    .project-image-placeholder{height:180px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--ink3);border-style:dashed;border-width:1px;border-color:var(--border);}
 
-    /* ══ VISIONNEUSE 3D ══ */
-    .viewer-3d-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
-    .viewer-3d-header { display:flex; align-items:center; justify-content:space-between; padding:.8rem 1.2rem; border-bottom:1px solid var(--border); background:var(--bg2); }
-    .viewer-3d-title { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); }
-    .viewer-tabs { display:flex; gap:.3rem; }
-    .viewer-tab { font-family:var(--mono); font-size:10px; padding:.25rem .65rem; border:1px solid var(--border); background:none; border-radius:2px; color:var(--ink3); cursor:pointer; transition:all var(--transition); }
-    .viewer-tab.active { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-    .viewer-canvas-wrap { position:relative; height:280px; background:linear-gradient(135deg,#1a1916,#2a2825); display:flex; align-items:center; justify-content:center; }
-    #viewerCanvas { position:absolute; inset:0; width:100%; height:100%; display:none; }
-    .viewer-loading { display:flex; flex-direction:column; align-items:center; gap:.8rem; font-family:var(--mono); font-size:11px; color:var(--ink3); }
-    .viewer-footer { padding:.6rem 1.2rem; border-top:1px solid var(--border); font-family:var(--mono); font-size:10px; color:var(--ink3); display:flex; gap:1.5rem; }
-    .models-thumbs { display:flex; gap:.6rem; flex-wrap:wrap; padding:.8rem 1.2rem; border-top:1px solid var(--border); background:var(--bg2); }
-    .model-thumb-btn { width:52px; height:42px; border:1px solid var(--border); border-radius:var(--radius); background:#1a1916; cursor:pointer; position:relative; overflow:hidden; padding:0; transition:border-color var(--transition); }
-    .model-thumb-btn.active { border-color:var(--accent); }
-    .model-thumb-btn canvas { position:absolute; inset:0; width:100%; height:100%; }
+    .project-sidebar{display:flex;flex-direction:column;gap:1.2rem;}
+    .sidebar-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    .sidebar-card-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);padding:.8rem 1.2rem;border-bottom:1px solid var(--border);background:var(--bg2);}
+    .sidebar-card-body{padding:1.2rem;}
+    .sidebar-link{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:12px;color:var(--ink2);text-decoration:none;padding:.5rem 0;border-bottom:1px solid var(--bg2);transition:color var(--transition);}
+    .sidebar-link:last-child{border-bottom:none;}
+    .sidebar-link:hover{color:var(--accent);}
 
-    @media (max-width:900px) { .project-body { grid-template-columns:1fr; } .meta-grid { grid-template-columns:repeat(4,1fr); } }
-    @media (max-width:600px) { .meta-grid { grid-template-columns:1fr 1fr; } .project-header-row { flex-direction:column; } }
+    @media(max-width:900px){.project-body{grid-template-columns:1fr;}.meta-grid{grid-template-columns:repeat(4,1fr);}}
+    @media(max-width:600px){.meta-grid{grid-template-columns:1fr 1fr;}.project-header-row{flex-direction:column;}}
   </style>
 </head>
 <body>
@@ -120,127 +107,70 @@
       <span class="breadcrumb-sep">/</span>
       <a href="../../index.html#projets"><span data-fr>Projets</span><span data-en>Projects</span></a>
       <span class="breadcrumb-sep">/</span>
-      <!-- ✏️ NOM DU PROJET -->
-      <span data-fr>Projet 3</span><span data-en>Project 3</span>
+      <span data-fr>Module ultrasons</span><span data-en>Ultrasound module</span>
     </nav>
 
-    <!-- ══ EN-TÊTE ══ -->
     <header class="project-header anim">
       <div class="project-header-row">
         <div>
           <!-- ✏️ TYPE -->
-          <div class="project-type-label"><span data-fr>Conception 3D</span><span data-en>3D Design</span></div>
+          <div class="project-type-label"><span data-fr>Traitement du signal</span><span data-en>Signal processing</span></div>
           <!-- ✏️ TITRE -->
-          <h1><span data-fr>Nom du Projet 3</span><span data-en>Project 3 Name</span></h1>
-          <!-- ✏️ DESCRIPTION COURTE -->
+          <h1><span data-fr>Module ultrasons</span><span data-en>Ultrasound module</span></h1>
+          <!-- ✏️ DESCRIPTION -->
           <p class="lead">
-            <span data-fr>Description courte et accrocheuse. Expliquez l'objectif principal en une ou deux phrases.</span>
-            <span data-en>Short and punchy description. State the main objective in one or two sentences.</span>
+            <span data-fr>Capteur ultrasons avec traitement électronique pour mesurer des distances. Le signal est amplifié et converti en information exploitable par un système électronique.</span>
+            <span data-en>Ultrasound sensor with electronic signal processing to measure distances. The signal is amplified and converted into usable information by an electronic system.</span>
           </p>
           <div class="project-tags-row">
             <!-- ✏️ TAGS -->
-            <span class="tag">C</span><span class="tag">STM32</span><span class="tag">PCB</span><span class="tag">Fusion 360</span><span class="tag">KiCad</span>
+            <span class="tag" data-fr>Électronique analogique</span><span class="tag" data-en>Analog electronics</span><span class="tag" data-fr>Acquisition de signal</span><span class="tag" data-en>Signal Acquisition</span><span class="tag" data-fr>Filtrage & Traitement du signal</span><span class="tag" data-en>Signal Filtering & Processing</span>
           </div>
         </div>
         <div class="meta-grid">
-          <!-- ✏️ MÉTADONNÉES -->
-          <div class="meta-item"><div class="meta-label" data-fr>Durée</div><div class="meta-label" data-en>Duration</div><div class="meta-value">3 <span data-fr>mois</span><span data-en>months</span></div></div>
-          <div class="meta-item"><div class="meta-label" data-fr>Année</div><div class="meta-label" data-en>Year</div><div class="meta-value">2024</div></div>
-          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value" data-fr>Personnel</div><div class="meta-value" data-en>Personal</div></div>
+          <div class="meta-item"><div class="meta-label" data-fr>Durée</div><div class="meta-label" data-en>Duration</div><div class="meta-value">4 <span data-fr>semaines</span><span data-en>weeks</span></div></div>
+          <div class="meta-item"><div class="meta-label" data-fr>Année</div><div class="meta-label" data-en>Year</div><div class="meta-value">2025</div></div>
+          <div class="meta-item"><div class="meta-label">Type</div><div class="meta-value" data-fr>Scolaire</div><div class="meta-value" data-en>School</div></div>
           <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value" data-fr>Terminé</div><div class="meta-value" data-en>Done</div></div>
         </div>
       </div>
     </header>
 
-    <!-- ══ CORPS ══ -->
     <div class="project-body">
-
       <main class="project-content">
 
         <h2 class="anim"><span data-fr>Contexte & Objectifs</span><span data-en>Context & Goals</span></h2>
-        <!-- ✏️ CONTENU FR/EN -->
-        <p class="anim anim-d1" data-fr>Décrivez ici pourquoi vous avez réalisé ce projet. Quel problème vouliez-vous résoudre ? Quel était le cahier des charges ?</p>
-        <p class="anim anim-d1" data-en>Describe why you built this project. What problem were you solving? What were the specifications?</p>
+        <p class="anim" data-fr>Dans de nombreux systèmes de détection et de robotique, il est nécessaire de mesurer la distance des objets de manière rapide et précise. Ce projet résout ce problème en utilisant un capteur ultrason dont le signal réfléchi est amplifié, filtré et converti en information exploitable, permettant ainsi de détecter des objets et de mesurer leur distance même en présence de bruit ou de perturbations électriques.</p>
+        <p class="anim" data-en>In many detection and robotics systems, it is necessary to measure the distance of objects quickly and accurately. This project addresses this issue by using an ultrasonic sensor whose reflected signal is amplified, filtered, and converted into usable information, allowing objects to be detected and their distance measured even in the presence of noise or electrical disturbances.</p>
 
-        <!-- ✏️ GALERIE D'IMAGES — ajoutez vos images dans le dossier du projet -->
-        <!-- Supprimez ou complétez ce bloc selon vos images -->
-        <div class="img-gallery anim">
-          <div class="img-gallery-title"><span data-fr>Photos & schémas</span><span data-en>Photos & schematics</span></div>
-          <div class="img-grid">
-            <!-- Exemple : <div class="img-item" onclick="openLight(this)"><img src="schema.jpg" alt="Schéma électrique" data-caption="Schéma électrique — KiCad"></div> -->
-            <div class="img-item" style="display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--ink3);border-style:dashed;">
-              <span style="text-align:center;padding:1rem;line-height:1.8;"><span data-fr>Ajoutez vos images<br>ici</span><span data-en>Add your images<br>here</span></span>
-            </div>
-          </div>
+        <!-- ✏️ IMAGE PRINCIPALE — remplacez le placeholder par une vraie image -->
+        <div class="project-image anim">
+          <img src="ltspice.png" alt="Schéma du montage">
+          <div class="project-image-caption"><span data-fr>Schéma LTSpice</span><span data-en>LTSpice schematic</span></div>
         </div>
 
-        <h2 class="anim"><span data-fr>Conception & Réalisation</span><span data-en>Design & Implementation</span></h2>
-        <p class="anim" data-fr>Expliquez les étapes de conception, les choix techniques, les difficultés rencontrées.</p>
-        <p class="anim" data-en>Explain the design process, technical choices, and challenges encountered.</p>
-        <ul class="anim">
-          <li data-fr>Étape 1 : conception du schéma sous <code>KiCad</code></li>
-          <li data-en>Step 1: schematic design with <code>KiCad</code></li>
-          <li data-fr>Étape 2 : programmation du <code>STM32</code> en C</li>
-          <li data-en>Step 2: <code>STM32</code> firmware in C</li>
-          <li data-fr>Étape 3 : modélisation du boîtier sous <code>Fusion 360</code></li>
-          <li data-en>Step 3: enclosure modelling with <code>Fusion 360</code></li>
-          <li data-fr>Étape 4 : impression 3D et assemblage</li>
-          <li data-en>Step 4: 3D printing and assembly</li>
-        </ul>
-
-        <h2 class="anim"><span data-fr>Résultats & Apprentissages</span><span data-en>Results & Takeaways</span></h2>
-        <p class="anim" data-fr>Quels ont été les résultats ? Qu'avez-vous appris ? Comment amélioreriez-vous ce projet ?</p>
-        <p class="anim" data-en>What were the results? What did you learn? How would you improve this project?</p>
-
-      </main>
-
-      <!-- ══ SIDEBAR ══ -->
-      <aside class="project-sidebar">
-
-        <!-- Visionneuse 3D -->
-        <div class="viewer-3d-card anim anim-right">
-          <div class="viewer-3d-header">
-            <span class="viewer-3d-title"><span data-fr>Modèle 3D</span><span data-en>3D Model</span></span>
-            <div class="viewer-tabs">
-              <button class="viewer-tab active" onclick="setViewMode('rotate',this)"><span data-fr>Auto</span><span data-en>Auto</span></button>
-              <button class="viewer-tab" onclick="setViewMode('orbit',this)"><span data-fr>Orbite</span><span data-en>Orbit</span></button>
-            </div>
-          </div>
-          <div class="viewer-canvas-wrap" id="viewerWrap">
-            <canvas id="viewerCanvas"></canvas>
-            <div class="viewer-loading" id="viewerLoading">
-              <div class="spinner"></div>
-              <span data-fr>Chargement…</span><span data-en>Loading…</span>
-            </div>
-          </div>
-          <div class="models-thumbs" id="modelsThumbs" style="display:none;"></div>
-          <div class="viewer-footer">
-            <span data-fr>🖱 Clic : orbite</span><span data-en>🖱 Click: orbit</span>
-            <span>· <span data-fr>Molette : zoom</span><span data-en>Scroll: zoom</span></span>
-          </div>
-        </div>
-
-        <!-- Ressources -->
-        <div class="sidebar-card anim anim-right anim-d1">
-          <div class="sidebar-card-title"><span data-fr>Ressources</span><span data-en>Resources</span></div>
-          <div class="sidebar-card-body">
-            <!-- ✏️ LIENS -->
-            <a href="#" class="sidebar-link">⎋ GitHub</a>
-            <a href="#" class="sidebar-link">↓ <span data-fr>Rapport PDF</span><span data-en>PDF Report</span></a>
-            <a href="#" class="sidebar-link">↓ <span data-fr>Schéma KiCad</span><span data-en>KiCad schematic</span></a>
-          </div>
-        </div>
+        <h2 class="anim"><span data-fr>Architecture technique</span><span data-en>Technical Architecture</span></h2>
+        <p class="anim" data-fr>Le capteur ultrasonique émet une onde sonore à haute fréquence vers l’objet à mesurer. Cette onde est réfléchie par l’objet et revient vers le capteur. Le signal reçu, très faible, est d’abord amplifié et filtré par des circuits électroniques à base de TL082 afin de réduire le bruit et les perturbations. Ensuite, un comparateur LT1011 transforme le signal amplifié en un signal exploitable. Il est également possible d’ajouter des LEDs pour indiquer visuellement la distance ou la détection, ainsi que des buzzers pour fournir une alerte sonore, rendant le système plus interactif et intuitif.</p>
+        <p class="anim" data-en>The ultrasonic sensor emits a high-frequency sound wave toward the object to be measured. This wave is reflected by the object and returns to the sensor. The received signal, which is very weak, is first amplified and filtered by electronic circuits using a TL082 to reduce noise and disturbances. Then, an LT1011 comparator converts the amplified signal into usable information. It is also possible to add LEDs to visually indicate distance or detection, as well as buzzers to provide an audible alert, making the system more interactive and intuitive.</p>
 
         <a href="../../index.html#projets" class="btn btn-ghost anim anim-right anim-d2" style="width:100%;justify-content:center;">
           ← <span data-fr>Tous les projets</span><span data-en>All projects</span>
         </a>
+      </main>
 
+      <aside class="project-sidebar">
+        <div class="sidebar-card anim anim-right anim-d1">
+          <div class="sidebar-card-title"><span data-fr>Composants</span><span data-en>Components</span></div>
+          <div class="sidebar-card-body" style="font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:2.1;">
+            <!-- ✏️ LISTE COMPOSANTS -->
+            EUS & RUS Modules<br>TL082 (Op-Amp)<br>LT1011 (Voltage Comparator)<br>Electric strike<br>Buzzer
+          </div>
+        </div>
       </aside>
     </div>
 
   </div>
 
-  <!-- Lightbox -->
   <div class="img-lightbox" id="lightbox" onclick="closeLight(event)">
     <button class="img-lightbox-close" onclick="closeLight()">✕</button>
     <img id="lightboxImg" src="" alt="">
@@ -248,7 +178,7 @@
   </div>
 
   <footer>
-    <span class="footer-copy">© 2025 Prénom Nom</span>
+    <span class="footer-copy">© 2026 Romain Boyer</span>
     <div class="footer-links">
       <a href="../../index.html"><span data-fr>Accueil</span><span data-en>Home</span></a>
       <a href="../../index.html#contact">Contact</a>
@@ -256,150 +186,15 @@
   </footer>
 
   <script>
-    // ══════════════════════════════
-    // CONFIGURATION — modifiez ici
-    // ══════════════════════════════
+    function setLang(lang,btn){document.documentElement.setAttribute('data-lang',lang);document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');try{localStorage.setItem('portfolio-lang',lang);}catch(e){}}
+    try{const s=localStorage.getItem('portfolio-lang');if(s){document.documentElement.setAttribute('data-lang',s);document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===s));}}catch(e){}
 
-    // ✏️ Fichiers .glb dans modeles3d/ (relatif à ce fichier)
-    const MODELES_3D = [
-      // "boitier.glb",
-      // "carte-pcb.glb",
-    ];
+    const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.anim,.anim-left,.anim-right').forEach(el=>io.observe(el));
 
-    // ══════════════════════════════
-    // LANGUE
-    // ══════════════════════════════
-    function setLang(lang, btn) {
-      document.documentElement.setAttribute('data-lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
-    }
-    try {
-      const s = localStorage.getItem('portfolio-lang');
-      if (s) {
-        document.documentElement.setAttribute('data-lang', s);
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === s));
-      }
-    } catch(e) {}
-
-    // ══════════════════════════════
-    // ANIMATIONS
-    // ══════════════════════════════
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    document.querySelectorAll('.anim,.anim-left,.anim-right').forEach(el => io.observe(el));
-
-    // ══════════════════════════════
-    // LIGHTBOX IMAGES
-    // ══════════════════════════════
-    function openLight(el) {
-      const img = el.querySelector('img');
-      if (!img) return;
-      document.getElementById('lightboxImg').src = img.src;
-      document.getElementById('lightboxCaption').textContent = img.dataset.caption || img.alt || '';
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeLight(e) {
-      if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('img-lightbox-close')) return;
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; } });
-
-    // ══════════════════════════════
-    // THREE.JS + GLB
-    // ══════════════════════════════
-    function loadScript(src) { return new Promise((r,j) => { const s=document.createElement('script'); s.src=src; s.onload=r; s.onerror=j; document.head.appendChild(s); }); }
-    const threeReady = (async () => {
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
-      await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js');
-      await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js');
-    })();
-
-    let viewerRenderer=null, viewerRAF=null, viewerModel=null, viewerControls=null, viewMode='rotate';
-    function setViewMode(mode, btn) {
-      viewMode = mode;
-      document.querySelectorAll('.viewer-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      if (viewerControls) viewerControls.enabled = (mode === 'orbit');
-    }
-
-    async function initViewer(buf) {
-      await threeReady;
-      const wrap = document.getElementById('viewerWrap');
-      const canvas = document.getElementById('viewerCanvas');
-      const loading = document.getElementById('viewerLoading');
-      if (viewerRAF) cancelAnimationFrame(viewerRAF);
-      if (viewerRenderer) { viewerRenderer.dispose(); viewerRenderer = null; }
-      canvas.style.display = 'none'; loading.style.display = 'flex';
-      const w = wrap.clientWidth, h = 280;
-      canvas.width = w; canvas.height = h;
-      viewerRenderer = new THREE.WebGLRenderer({ canvas, antialias:true });
-      viewerRenderer.setSize(w,h); viewerRenderer.setPixelRatio(Math.min(devicePixelRatio,2));
-      viewerRenderer.outputEncoding = THREE.sRGBEncoding; viewerRenderer.setClearColor(0x1a1916,1);
-      const scene = new THREE.Scene();
-      const cam = new THREE.PerspectiveCamera(45,w/h,0.001,10000);
-      cam.position.set(0,1.2,3.5);
-      viewerControls = new THREE.OrbitControls(cam,canvas);
-      viewerControls.enableDamping=true; viewerControls.dampingFactor=0.07; viewerControls.enabled=(viewMode==='orbit');
-      scene.add(new THREE.AmbientLight(0xffffff,0.7));
-      const dl=new THREE.DirectionalLight(0xffffff,1.3); dl.position.set(4,6,4); scene.add(dl);
-      scene.add(new THREE.HemisphereLight(0x334466,0x221100,0.4));
-      new THREE.GLTFLoader().parse(buf.slice(0),'',(gltf)=>{
-        if(viewerModel) scene.remove(viewerModel);
-        viewerModel=gltf.scene;
-        const box=new THREE.Box3().setFromObject(viewerModel);
-        const center=box.getCenter(new THREE.Vector3());
-        const maxD=Math.max(...box.getSize(new THREE.Vector3()).toArray())||1;
-        viewerModel.scale.setScalar(2.5/maxD); viewerModel.position.copy(center.multiplyScalar(-2.5/maxD));
-        scene.add(viewerModel); viewerControls.target.set(0,0,0); viewerControls.update();
-        loading.style.display='none'; canvas.style.display='block';
-        let angle=0;
-        const loop=()=>{ viewerRAF=requestAnimationFrame(loop); if(viewMode==='rotate'){angle+=0.007;viewerModel.rotation.y=angle;} viewerControls.update(); viewerRenderer.render(scene,cam); };
-        loop();
-      },err=>{console.error(err);loading.innerHTML='<span style="color:#ef4444">⚠</span>';});
-    }
-
-    async function makeMiniThumb(btn,buf) {
-      await threeReady;
-      const canvas=document.createElement('canvas'); canvas.width=52; canvas.height=42;
-      canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
-      const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
-      renderer.setSize(52,42); renderer.setClearColor(0x1a1916,1); renderer.outputEncoding=THREE.sRGBEncoding;
-      const scene=new THREE.Scene(); const cam=new THREE.PerspectiveCamera(45,52/42,0.001,10000); cam.position.set(0,1,3);
-      scene.add(new THREE.AmbientLight(0xffffff,0.8)); const dl=new THREE.DirectionalLight(0xffffff,1.2); dl.position.set(3,5,3); scene.add(dl);
-      new THREE.GLTFLoader().parse(buf.slice(0),'',(gltf)=>{
-        const m=gltf.scene; const box=new THREE.Box3().setFromObject(m);
-        const center=box.getCenter(new THREE.Vector3()); const maxD=Math.max(...box.getSize(new THREE.Vector3()).toArray())||1;
-        m.scale.setScalar(2/maxD); m.position.copy(center.multiplyScalar(-2/maxD)); scene.add(m);
-        let a=0; const loop=()=>{requestAnimationFrame(loop);a+=0.013;m.rotation.y=a;renderer.render(scene,cam);};
-        loop(); btn.appendChild(canvas);
-      },()=>{});
-    }
-
-    async function loadAllModels() {
-      const card = document.querySelector('.viewer-3d-card');
-      if (MODELES_3D.length === 0) { if(card) card.style.display='none'; return; }
-      const thumbsEl = document.getElementById('modelsThumbs');
-      let first = true;
-      for (const f of MODELES_3D) {
-        try {
-          const res = await fetch(`modeles3d/${f}`); if(!res.ok) throw 0;
-          const buf = await res.arrayBuffer();
-          const btn = document.createElement('button');
-          btn.className = 'model-thumb-btn'; btn.title = f.replace(/\.glb$/i,'');
-          btn.onclick = () => { document.querySelectorAll('.model-thumb-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); initViewer(buf); };
-          thumbsEl.appendChild(btn);
-          makeMiniThumb(btn, buf);
-          if (first) { first=false; btn.classList.add('active'); initViewer(buf); if(MODELES_3D.length>1) thumbsEl.style.display='flex'; }
-        } catch(e) { console.warn('GLB not found:', f); }
-      }
-      if (first && card) card.style.display='none'; // aucun chargé
-    }
-    loadAllModels();
+    function openLight(el){const img=el.querySelector('img');if(!img)return;document.getElementById('lightboxImg').src=img.src;document.getElementById('lightboxCaption').textContent=img.dataset.caption||img.alt||'';document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+    function closeLight(e){if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('img-lightbox-close'))return;document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}});
   </script>
 </body>
 </html>
