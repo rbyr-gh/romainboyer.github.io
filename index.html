@@ -135,7 +135,7 @@
 
     /* ══ CONTACT ══ */
     #contact { }
-    .contact-intro { font-size: 1rem; font-weight: 300; color: var(--ink2); max-width: 600px; line-height: 1.8; margin-bottom: 2rem; }
+    .contact-intro { font-size: 1rem; font-weight: 300; color: var(--ink2); max-width: 600px; line-height: 1.8; margin-bottom: 1rem; }
     .contact-links-row { display: flex; flex-wrap: wrap; gap: 1rem; }
     .contact-link-card { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1.4rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--ink2); font-family: var(--mono); transition: all var(--transition); }
     .contact-link-card:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
@@ -197,6 +197,7 @@
         <span data-fr>Étudiant en <strong>électronique &amp; informatique</strong>, passionné par la conception de systèmes, le prototypage et la modélisation 3D. À la recherche d'une alternance pour développer mon savoir-faire technique.</span>
         <span data-en>Student in <strong>electronics &amp; embedded systems</strong>, passionate about system design, prototyping and 3D modelling. Seeking an apprenticeship to grow my technical expertise.</span>
       </p>
+
       <div class="hero-cta">
         <a href="#contact" class="btn btn-primary"><span data-fr>Me contacter</span><span data-en>Contact me</span></a>
         <a href="#projets" class="btn btn-ghost"><span data-fr>Voir les projets</span><span data-en>See projects</span></a>
@@ -225,16 +226,19 @@
     <h2 class="anim anim-d1"><span data-fr>Qui suis-je ?</span><span data-en>Who am I?</span></h2>
     <div class="about-grid">
       <div class="about-text anim anim-left">
-        <p data-fr>Animé par les <strong>systèmes embarqués</strong>, j'ai développé des compétences  en électronique analogique et numérique, ainsi qu'en programmation bas niveau.</p>
+        <p data-fr>Animé par les <strong>systèmes embarqués & l'IA</strong>, j'ai développé des compétences  en électronique analogique et numérique, ainsi qu'en programmation bas niveau.</p>
         <p data-fr>Mon attrait pour la conception 3D avec Fusion me permet de mener des projets de bout en bout : du schéma électrique à la pièce imprimée en 3D, en passant par le firmware.</p>
         <p data-fr>Je cherche une alternance pour septembre 2026 qui me permette d'apprendre auprès de professionnels tout en apportant ma curiosité et ma rigueur à des projets concrets.</p>
-        <p data-en>Passionate about <strong>embedded systems</strong>, I am building solid skills in analog and digital electronics, as well as low-level programming.</p>
+        <p data-en>Passionate about <strong>embedded systems & AI</strong>, I am building solid skills in analog and digital electronics, as well as low-level programming.</p>
         <p data-en>My interest in 3D design with Fusion  lets me carry projects from end to end: from electrical schematics to 3D-printed parts and firmware.</p>
         <p data-en>I am looking for an apprenticeship to learn from experienced professionals while contributing my curiosity and rigour to real projects.</p>
       </div>
+      <div>
+
+      </div>
       <div class="about-stats">
         <div class="stat-box anim anim-scale anim-d1"><div class="num">2</div><div class="label"><span data-fr>Projets réalisés</span><span data-en>Projects done</span></div></div>
-        <div class="stat-box anim anim-scale anim-d3"><div class="num">5</div><div class="label">Compétences techniques clés</div></div>
+        <div class="stat-box anim anim-scale anim-d3"><div class="num">5</div><div class="label"><span data-fr>Compétences techniques clés</span><span data-en>Key technical skills</span></div></div>
         <div class="stat-box anim anim-scale anim-d2"><div class="num">2</div><div class="label"><span data-fr>Langages principaux</span><span data-en>Main languages</span></div></div>
         <div class="stat-box anim anim-scale anim-d4"><div class="num">100%</div><div class="label"><span data-fr>Motivé</span><span data-en>Motivated</span></div></div>
       </div>
@@ -412,6 +416,29 @@
   <section id="contact">
     <div class="section-label anim" data-num="05">Contact</div>
     <h2 class="anim anim-d1"><span data-fr>Travaillons ensemble</span><span data-en>Let's work together</span></h2>
+    <!-- ══ LIENS ALTERNANCE ══ -->
+    <p class="contact-intro anim">
+      <span data-fr>🔗 Liens utiles</span>
+      <span data-en>🔗 Useful links</span>
+    </p>
+    <div class="hero-alt-links" style="margin-top:1.2rem; margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+      <a href="https://www.eseo.fr/formations/cycle-ingenieur-eseo-statut-apprenti/" 
+        target="_blank" class="contact-link-card" style="padding:0.6rem 1rem;">
+        <span class="icon" style="font-size:16px;">📘</span>
+        <span>
+          <span class="lbl"><span data-fr>Programme</span><span data-en>Program</span></span>
+          <span class="val"><span data-fr>Mon alternance à l'ESEO</span><span data-en>My apprenticeship at ESEO</span></span>
+        </span>
+      </a>
+      <a href="https://www.eseo.fr/entreprises/accueillir-un-alternant/" 
+        target="_blank" class="contact-link-card" style="padding:0.6rem 1rem;">
+        <span class="icon" style="font-size:16px;">🏢</span>
+        <span>
+          <span class="lbl"><span data-fr>Recruteurs</span><span data-en>Employers</span></span>
+          <span class="val"><span data-fr>Accueillir un alternant</span><span data-en>Host an apprentice</span></span>
+        </span>
+      </a>
+    </div>
     <p class="contact-intro anim">
       <span data-fr>Vous cherchez un alternant motivé en électronique et informatique ? N'hésitez pas à me contacter via l'un de ces canaux.</span>
       <span data-en>Looking for a motivated apprentice in electronics and computer science? Feel free to reach out through any of the channels below.</span>
